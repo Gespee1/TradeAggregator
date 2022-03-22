@@ -108,6 +108,10 @@ namespace TradeAggregator
                 command.ExecuteNonQuery();
 
                 MessageBox.Show("Регистрация успешно завершена.", "Поздравляем");
+
+                //Переключение на режим входа
+                _registrationFlag = false;
+                CheckState();
             }
             else // Авторизация
             {
