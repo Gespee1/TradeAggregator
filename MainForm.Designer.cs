@@ -88,6 +88,7 @@ namespace TradeAggregator
             this.textBoxPass.Name = "textBoxPass";
             this.textBoxPass.Size = new System.Drawing.Size(127, 26);
             this.textBoxPass.TabIndex = 4;
+            this.textBoxPass.UseSystemPasswordChar = true;
             // 
             // buttonApply
             // 
@@ -132,6 +133,7 @@ namespace TradeAggregator
             this.textBoxPassRepeat.Name = "textBoxPassRepeat";
             this.textBoxPassRepeat.Size = new System.Drawing.Size(127, 26);
             this.textBoxPassRepeat.TabIndex = 9;
+            this.textBoxPassRepeat.UseSystemPasswordChar = true;
             this.textBoxPassRepeat.Visible = false;
             // 
             // labelPassRepeat

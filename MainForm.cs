@@ -81,7 +81,7 @@ namespace TradeAggregator
         {
             SqlCommand command;
             SqlDataReader reader;
-            Int64 userRecID = 0;
+            Int64 userRecID;
             bool saveFlag;
 
             if (CheckNullTextBoxes())
@@ -159,12 +159,12 @@ namespace TradeAggregator
                     }
                 }
 
-                MessageBox.Show("Вы авторизовались", "Поздравляем");
+                //MessageBox.Show("Вы авторизовались", "Поздравляем");
                 // Открытие формы личного кабинета
-                //
-                // ..........
-                // ..........
-                //
+                Form accountForm = new AccountForm(userRecID);
+                this.Hide();
+                accountForm.ShowDialog();
+                this.Close();
             }
         }
 
