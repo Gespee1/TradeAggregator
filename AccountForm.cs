@@ -38,7 +38,7 @@ namespace TradeAggregator
         // Загрузка данных о пользователе
         private void loadData()
         {
-            SqlCommand command = new SqlCommand($"select Type, Login from Users where RecId = {_userID}", _connection);
+            SqlCommand command = new SqlCommand($"select Type, Login from Users where RecID = {_userID}", _connection);
             SqlDataReader reader = command.ExecuteReader();
             if(reader.Read())
             {
@@ -73,8 +73,15 @@ namespace TradeAggregator
         }
         private void profileOpen()
         {
-            SqlCommand command = new SqlCommand($"select ProfileId from Users where RecId = {_userID}", _connection);
-            Form profileForm = new ProfileForm(Convert.ToInt64(command.ExecuteScalar()));
+            string profileId;
+            Form profileForm;
+
+            SqlCommand command = new SqlCommand($"select ProfileId from Users where RecID = {_userID}", _connection);
+            profileId = command.ExecuteScalar().ToString();
+            if (profileId != "")
+                profileForm = new ProfileForm(_userID, Convert.ToInt64(profileId), true);
+            else
+                profileForm = new ProfileForm(_userID, 0, true);
             profileForm.ShowDialog();
         }
 

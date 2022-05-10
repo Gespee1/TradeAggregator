@@ -15,7 +15,7 @@ namespace TradeAggregator
     public partial class ProfileForm : Form
     {
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
-        private Int64 _userId;
+        private Int64 _userId, _profileId;
         private bool _canChange;
 
         public ProfileForm()
@@ -24,9 +24,10 @@ namespace TradeAggregator
         }
 
         // Конструктор с параметрами
-        public ProfileForm(Int64 userId = 0, bool canChange = false)
+        public ProfileForm(Int64 userId, Int64 profileId = 0, bool canChange = false)
         {
             _userId = userId;
+            _profileId = profileId;
             _canChange = canChange;
             InitializeComponent();
         }
@@ -40,18 +41,22 @@ namespace TradeAggregator
         private void dataLoad()
         {
             DataTable data = new DataTable();
+            int newProfileRecId;
             SqlCommand command;
 
-            if (_userId != 0)
+            if (_profileId != 0)
             {
-                command = new SqlCommand($"select * from Profiles " +
-                    $"where RecId = (select ProfileId from Users where RecId = {_userId})", _connection);
+                command = new SqlCommand($"select * from Profiles where RecID = {_profileId}", _connection);
                 SqlDataAdapter adapt = new SqlDataAdapter(command);
                 adapt.Fill(data);
             }
             else
             {
-                command = new SqlCommand($"insert into Profiles values (0, '', '', '', '', '', '', '', '', '',)", _connection);
+                command = new SqlCommand($"insert into Profiles values (0, '', '', '', '', '', '', '', '', '')", _connection);
+                command.ExecuteNonQuery();
+                command = new SqlCommand("SELECT SCOPE_IDENTITY()", _connection); // Получение только что добавленного ид
+                newProfileRecId = Convert.ToInt32(command.ExecuteScalar());
+                command = new SqlCommand($"update Users set ProfileId = {newProfileRecId} where RecID = {_userId}", _connection);
                 command.ExecuteNonQuery();
             }
         }

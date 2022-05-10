@@ -159,7 +159,6 @@ namespace TradeAggregator
                     }
                 }
 
-                //MessageBox.Show("Вы авторизовались", "Поздравляем");
                 // Открытие формы личного кабинета
                 Form accountForm = new AccountForm(userRecID);
                 this.Hide();
