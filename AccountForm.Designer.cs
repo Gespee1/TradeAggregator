@@ -36,7 +36,7 @@ namespace TradeAggregator
             this.buttonKP = new System.Windows.Forms.Button();
             this.buttonContracts = new System.Windows.Forms.Button();
             this.buttonProfileVend = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonAssortment = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -125,16 +125,17 @@ namespace TradeAggregator
             this.buttonProfileVend.UseVisualStyleBackColor = true;
             this.buttonProfileVend.Click += new System.EventHandler(this.buttonProfileVend_Click);
             // 
-            // button2
+            // buttonAssortment
             // 
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(137, 39);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(240, 30);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Ассортимент";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonAssortment.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonAssortment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAssortment.Location = new System.Drawing.Point(137, 39);
+            this.buttonAssortment.Name = "buttonAssortment";
+            this.buttonAssortment.Size = new System.Drawing.Size(240, 30);
+            this.buttonAssortment.TabIndex = 13;
+            this.buttonAssortment.Text = "Ассортимент";
+            this.buttonAssortment.UseVisualStyleBackColor = true;
+            this.buttonAssortment.Click += new System.EventHandler(this.buttonAssortment_Click);
             // 
             // button3
             // 
@@ -197,7 +198,7 @@ namespace TradeAggregator
             // 
             this.panelVendor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panelVendor.Controls.Add(this.buttonProfileVend);
-            this.panelVendor.Controls.Add(this.button2);
+            this.panelVendor.Controls.Add(this.buttonAssortment);
             this.panelVendor.Controls.Add(this.button3);
             this.panelVendor.Controls.Add(this.button7);
             this.panelVendor.Controls.Add(this.button4);
@@ -236,7 +237,7 @@ namespace TradeAggregator
         private System.Windows.Forms.Button buttonKP;
         private System.Windows.Forms.Button buttonContracts;
         private System.Windows.Forms.Button buttonProfileVend;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonAssortment;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button6;

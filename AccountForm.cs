@@ -71,6 +71,7 @@ namespace TradeAggregator
         {
             profileOpen();
         }
+
         private void profileOpen()
         {
             string profileId;
@@ -85,6 +86,13 @@ namespace TradeAggregator
             profileForm.ShowDialog();
         }
 
+        private void buttonAssortment_Click(object sender, EventArgs e)
+        {
+            Form assortment;
+            assortment = new Assortment(_userID);
+            assortment.ShowDialog();
+
+        }
 
 
 
@@ -98,7 +106,6 @@ namespace TradeAggregator
         {
             _connection.Close();
         }
-
-        
+               
     }
 }
