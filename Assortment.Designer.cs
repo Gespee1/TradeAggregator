@@ -39,7 +39,7 @@
             this.ShowIcon = false;
             this.Text = "Ассортимент";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Assortment_FormClosing);
-            this.Load += new System.EventHandler(this.ProfileForm_Load);
+            this.Load += new System.EventHandler(this.AssortmentForm_Load);
             this.ResumeLayout(false);
 
         }

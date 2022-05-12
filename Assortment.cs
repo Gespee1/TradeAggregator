@@ -25,7 +25,7 @@ namespace TradeAggregator
         }
 
         // Загрузка формы
-        private void ProfileForm_Load(object sender, EventArgs e)
+        private void AssortmentForm_Load(object sender, EventArgs e)
         {
             _connection.Open();
         }
