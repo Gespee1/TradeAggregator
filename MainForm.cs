@@ -148,13 +148,16 @@ namespace TradeAggregator
                 {
                     if(checkBoxSave.Checked) // Вкл
                     {
-                        command = new SqlCommand($"update Users set SaveFlag = 1, PCName = '{Environment.UserDomainName}', " +
+                        command = new SqlCommand($"update Users set SaveFlag = 1" +
+                            $"where PCName = '{Environment.UserDomainName}' and " +
                             $"UserName = '{Environment.UserName}'", _connection);
                         command.ExecuteNonQuery();
                     }
                     else // Выкл
                     {
-                        command = new SqlCommand($"update Users set SaveFlag = 0", _connection);
+                        command = new SqlCommand($"update Users set SaveFlag = 0" +
+                            $"where PCName = '{Environment.UserDomainName}' and " +
+                            $"UserName = '{Environment.UserName}'", _connection);
                         command.ExecuteNonQuery();
                     }
                 }

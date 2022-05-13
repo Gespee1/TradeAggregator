@@ -16,11 +16,13 @@ namespace TradeAggregator
     {
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
         private Int64 _userId;
+        bool _typeIndex;
 
         //мб добавить в конструктор еще vendor_id открываемого поставщика, если будет общая форма просмотра ассортимента, надо будет обсудить
-        public Assortment(Int64 userId)
+        public Assortment(Int64 userId, bool typeIndex)
         {
             _userId = userId;
+            _typeIndex = typeIndex;
             InitializeComponent();
         }
 
@@ -28,6 +30,21 @@ namespace TradeAggregator
         private void AssortmentForm_Load(object sender, EventArgs e)
         {
             _connection.Open();
+            loadData();
+        }
+
+        private void loadData()
+        {
+            buttonAllProd.Visible = false;
+           if (!_typeIndex)
+           {
+                buttonAllProd.Visible = true;
+           }
+        
+           else
+           {
+                buttonAllProd.Visible = false;
+           }
         }
 
         // Закрытие формы

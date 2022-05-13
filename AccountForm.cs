@@ -89,7 +89,7 @@ namespace TradeAggregator
         private void buttonAssortment_Click(object sender, EventArgs e)
         {
             Form assortment;
-            assortment = new Assortment(_userID);
+            assortment = new Assortment(_userID, _typeIndex);
             assortment.ShowDialog();
 
         }
