@@ -104,7 +104,8 @@ namespace TradeAggregator
                 }
 
                 command = new SqlCommand($"insert into Users values ({comboBoxType.SelectedIndex}, " +
-                    $"'{textBoxLogin.Text.Trim()}', '{textBoxPass.Text.Trim()}', 0, null, null, null)", _connection);
+                    $"'{textBoxLogin.Text.Trim()}', '{textBoxPass.Text.Trim()}', 0, '{Environment.UserDomainName}', " +
+                    $"'{Environment.UserName}', null)", _connection);
                 command.ExecuteNonQuery();
 
                 MessageBox.Show("Регистрация успешно завершена.", "Поздравляем");
