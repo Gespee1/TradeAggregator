@@ -53,11 +53,11 @@
     <Compile Include="AccountForm.Designer.cs">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Assortment.cs">
+    <Compile Include="ListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Assortment.Designer.cs">
-      <DependentUpon>Assortment.cs</DependentUpon>
+    <Compile Include="ListForm.Designer.cs">
+      <DependentUpon>ListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Extends\EDGV\EDGVColumnHeaderCell.cs" />
     <Compile Include="Extends\EDGV\EDGVFilterEventArgs.cs" />
@@ -98,8 +98,8 @@
     <EmbeddedResource Include="AccountForm.resx">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assortment.resx">
-      <DependentUpon>Assortment.cs</DependentUpon>
+    <EmbeddedResource Include="ListForm.resx">
+      <DependentUpon>ListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extends\EDGV.Localization.EDGVStrings.resources" />
     <EmbeddedResource Include="Extends\EDGV.Properties.Resources.resources" />

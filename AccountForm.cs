@@ -17,6 +17,7 @@ namespace TradeAggregator
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
         private Int64 _userID;
         private bool _typeIndex;
+        private Int32 _buttonFlag; //флаг, фиксирующий то, какую кнопку нажали
 
         public AccountForm()
         {
@@ -86,10 +87,12 @@ namespace TradeAggregator
             profileForm.ShowDialog();
         }
 
+        //открытие формы Ассортимента
         private void buttonAssortment_Click(object sender, EventArgs e)
         {
+            _buttonFlag = 0;
             Form assortment;
-            assortment = new Assortment(_userID, _typeIndex);
+            assortment = new ListForm(_userID, _typeIndex, _buttonFlag);
             assortment.ShowDialog();
 
         }

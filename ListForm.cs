@@ -12,17 +12,19 @@ using System.Configuration;
 
 namespace TradeAggregator
 {
-    public partial class Assortment : Form
+    public partial class ListForm : Form
     {
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
         private Int64 _userId;
+        private Int32 _flag;
         bool _typeIndex;
 
-        //мб добавить в конструктор еще vendor_id открываемого поставщика, если будет общая форма просмотра ассортимента, надо будет обсудить
-        public Assortment(Int64 userId, bool typeIndex)
+       //конструктор принимающий значения
+        public ListForm(Int64 userId, bool typeIndex, Int32 flag)
         {
             _userId = userId;
             _typeIndex = typeIndex;
+            _flag = flag;
             InitializeComponent();
         }
 
@@ -36,7 +38,7 @@ namespace TradeAggregator
         private void loadData()
         {
             buttonAllProd.Visible = false;
-           if (!_typeIndex)
+           if (!_typeIndex && _flag == 0)
            {
                 buttonAllProd.Visible = true;
            }
