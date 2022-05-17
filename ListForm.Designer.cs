@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.buttonAllProd = new System.Windows.Forms.Button();
+            this.labelHeader = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonAllProd
@@ -42,11 +43,22 @@
             this.buttonAllProd.Text = "Все товары";
             this.buttonAllProd.UseVisualStyleBackColor = true;
             // 
+            // labelHeader
+            // 
+            this.labelHeader.AutoSize = true;
+            this.labelHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelHeader.Location = new System.Drawing.Point(274, 9);
+            this.labelHeader.Name = "labelHeader";
+            this.labelHeader.Size = new System.Drawing.Size(99, 20);
+            this.labelHeader.TabIndex = 14;
+            this.labelHeader.Text = "Заголовок";
+            // 
             // ListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelHeader);
             this.Controls.Add(this.buttonAllProd);
             this.Name = "ListForm";
             this.ShowIcon = false;
@@ -54,11 +66,13 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Assortment_FormClosing);
             this.Load += new System.EventHandler(this.AssortmentForm_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button buttonAllProd;
+        private System.Windows.Forms.Label labelHeader;
     }
 }
