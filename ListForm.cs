@@ -38,8 +38,11 @@ namespace TradeAggregator
         private void loadData()
         {
             buttonAllProd.Visible = false;
+
+            //Поставщик просматривает свой ассортимент
            if (!_typeIndex && _flag == 0)
            {
+                labelHeader.Text = "Ассортимент";
                 buttonAllProd.Visible = true;
            }
         
