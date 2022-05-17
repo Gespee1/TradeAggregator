@@ -73,6 +73,7 @@ namespace TradeAggregator
             profileOpen();
         }
 
+        // Открытие формы профиля
         private void profileOpen()
         {
             string profileId;
@@ -97,7 +98,12 @@ namespace TradeAggregator
 
         }
 
-
+        // Открытие формы создания заказа
+        private void buttonOrder_Click(object sender, EventArgs e)
+        {
+            Form OrderForm = new OrderForm(_userID);
+            OrderForm.ShowDialog();
+        }
 
 
 
@@ -109,6 +115,7 @@ namespace TradeAggregator
         {
             _connection.Close();
         }
-               
+
+        
     }
 }

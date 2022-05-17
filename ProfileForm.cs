@@ -16,7 +16,7 @@ namespace TradeAggregator
     {
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
         private Int64 _userId, _profileId;
-        private bool _canChange;
+        private bool _canChange, _enableStatus;
 
         public ProfileForm()
         {
@@ -36,19 +36,83 @@ namespace TradeAggregator
         {
             _connection.Open();
             dataLoad();
+            setEnabled(_canChange);
+            if (!_canChange)
+                button1.Enabled = false;
         }
+
+        // Выбор режима работы формы
+        private void setEnabled(bool canChange)
+        {
+            if(!canChange)
+            {
+                comboBoxRespPerson.Enabled = false;
+                textBoxName.Enabled = false;
+                textBoxUrName.Enabled = false;
+                textBoxINN.Enabled = false;
+                textBoxKPP.Enabled = false;
+                textBoxDirector.Enabled = false;
+                textBoxUrAddress.Enabled = false;
+                textBoxBankAccount.Enabled = false;
+                textBoxBankName.Enabled = false;
+                textBoxBankBIK.Enabled = false;
+                textBoxCorrAccount.Enabled = false;
+                _enableStatus = false;
+            }
+            else
+            {
+                comboBoxRespPerson.Enabled = true;
+                textBoxName.Enabled = true;
+                textBoxUrName.Enabled = true;
+                textBoxINN.Enabled = true;
+                textBoxKPP.Enabled = true;
+                textBoxDirector.Enabled = true;
+                textBoxUrAddress.Enabled = true;
+                textBoxBankAccount.Enabled = true;
+                textBoxBankName.Enabled = true;
+                textBoxBankBIK.Enabled = true;
+                textBoxCorrAccount.Enabled = true;
+                _enableStatus = true;
+            }
+        }
+
         // Загрузка данных
         private void dataLoad()
         {
-            DataTable data = new DataTable();
             int newProfileRecId;
             SqlCommand command;
+            string innKpp;
+
+            command = new SqlCommand($"select Name from ResponsiblePersons", _connection);
+            SqlDataReader reader = command.ExecuteReader();
+            while(reader.Read())
+                comboBoxRespPerson.Items.Add(reader[0].ToString());
+            reader.Close();
 
             if (_profileId != 0)
             {
-                command = new SqlCommand($"select * from Profiles where RecID = {_profileId}", _connection);
-                SqlDataAdapter adapt = new SqlDataAdapter(command);
-                adapt.Fill(data);
+                command = new SqlCommand($"select rp.Name, p.[Name], p.[UrasticName], p.[INN\\KPP], p.[DirectorName], p.[UrasticAddress], p.[Account]" +
+                    $", p.[BankName], p.[BankBik], p.[CorrAccount] from Profiles p left join ResponsiblePersons rp on rp.RecId = p.RespPerson " +
+                    $"where p.RecID = {_profileId}", _connection);
+                reader = command.ExecuteReader();
+                reader.Read();
+                textBoxCode.Text = _profileId.ToString();
+                comboBoxRespPerson.SelectedItem = reader[0].ToString();
+                textBoxName.Text = reader[1].ToString();
+                textBoxUrName.Text = reader[2].ToString();
+                innKpp = reader[3].ToString();
+                if(innKpp.Contains("\\"))
+                {
+                    textBoxINN.Text = innKpp.Split('\\')[0];
+                    textBoxKPP.Text = innKpp.Split('\\')[1];
+                }
+                textBoxDirector.Text = reader[4].ToString();
+                textBoxUrAddress.Text = reader[5].ToString();
+                textBoxBankAccount.Text = reader[6].ToString();
+                textBoxBankName.Text = reader[7].ToString();
+                textBoxBankBIK.Text = reader[8].ToString();
+                textBoxCorrAccount.Text = reader[9].ToString();
+                reader.Close();
             }
             else
             {
@@ -61,6 +125,23 @@ namespace TradeAggregator
             }
         }
 
+        // Кнопка переключения режима редактирования и сохранения
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (_enableStatus)
+            {
+                setEnabled(false);
+                recordData();
+            }
+            else
+                setEnabled(true);
+        }
+
+        // Запись данных в базу
+        private void recordData()
+        {
+
+        }
 
 
 

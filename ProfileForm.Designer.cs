@@ -88,6 +88,7 @@ namespace TradeAggregator
             // 
             // comboBoxRespPerson
             // 
+            this.comboBoxRespPerson.Enabled = false;
             this.comboBoxRespPerson.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBoxRespPerson.FormattingEnabled = true;
             this.comboBoxRespPerson.Location = new System.Drawing.Point(455, 34);
@@ -107,6 +108,7 @@ namespace TradeAggregator
             // 
             // textBoxName
             // 
+            this.textBoxName.Enabled = false;
             this.textBoxName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxName.Location = new System.Drawing.Point(245, 80);
             this.textBoxName.Name = "textBoxName";
@@ -125,6 +127,7 @@ namespace TradeAggregator
             // 
             // textBoxUrName
             // 
+            this.textBoxUrName.Enabled = false;
             this.textBoxUrName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxUrName.Location = new System.Drawing.Point(245, 112);
             this.textBoxUrName.Name = "textBoxUrName";
@@ -153,6 +156,7 @@ namespace TradeAggregator
             // 
             // textBoxINN
             // 
+            this.textBoxINN.Enabled = false;
             this.textBoxINN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxINN.Location = new System.Drawing.Point(245, 144);
             this.textBoxINN.Name = "textBoxINN";
@@ -161,6 +165,7 @@ namespace TradeAggregator
             // 
             // textBoxKPP
             // 
+            this.textBoxKPP.Enabled = false;
             this.textBoxKPP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxKPP.Location = new System.Drawing.Point(448, 144);
             this.textBoxKPP.Name = "textBoxKPP";
@@ -179,6 +184,7 @@ namespace TradeAggregator
             // 
             // textBoxDirector
             // 
+            this.textBoxDirector.Enabled = false;
             this.textBoxDirector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxDirector.Location = new System.Drawing.Point(245, 176);
             this.textBoxDirector.Name = "textBoxDirector";
@@ -197,6 +203,7 @@ namespace TradeAggregator
             // 
             // textBoxUrAddress
             // 
+            this.textBoxUrAddress.Enabled = false;
             this.textBoxUrAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxUrAddress.Location = new System.Drawing.Point(245, 208);
             this.textBoxUrAddress.Name = "textBoxUrAddress";
@@ -215,6 +222,7 @@ namespace TradeAggregator
             // 
             // textBoxBankName
             // 
+            this.textBoxBankName.Enabled = false;
             this.textBoxBankName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxBankName.Location = new System.Drawing.Point(245, 240);
             this.textBoxBankName.Name = "textBoxBankName";
@@ -223,6 +231,7 @@ namespace TradeAggregator
             // 
             // textBoxBankBIK
             // 
+            this.textBoxBankBIK.Enabled = false;
             this.textBoxBankBIK.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxBankBIK.Location = new System.Drawing.Point(245, 272);
             this.textBoxBankBIK.Name = "textBoxBankBIK";
@@ -251,6 +260,7 @@ namespace TradeAggregator
             // 
             // textBoxBankAccount
             // 
+            this.textBoxBankAccount.Enabled = false;
             this.textBoxBankAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxBankAccount.Location = new System.Drawing.Point(245, 304);
             this.textBoxBankAccount.Name = "textBoxBankAccount";
@@ -259,6 +269,7 @@ namespace TradeAggregator
             // 
             // textBoxCorrAccount
             // 
+            this.textBoxCorrAccount.Enabled = false;
             this.textBoxCorrAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxCorrAccount.Location = new System.Drawing.Point(245, 336);
             this.textBoxCorrAccount.Name = "textBoxCorrAccount";
@@ -285,6 +296,7 @@ namespace TradeAggregator
             this.button1.TabIndex = 24;
             this.button1.Text = "Редактировать";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
