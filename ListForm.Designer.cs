@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.buttonAllProd = new System.Windows.Forms.Button();
+            this.extendedDataGridView1 = new EDGV.ExtendedDataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.extendedDataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonAllProd
@@ -42,17 +44,30 @@
             this.buttonAllProd.Text = "Все товары";
             this.buttonAllProd.UseVisualStyleBackColor = true;
             // 
+            // extendedDataGridView1
+            // 
+            this.extendedDataGridView1.AutoGenerateContextFilters = true;
+            this.extendedDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.extendedDataGridView1.DateWithTime = false;
+            this.extendedDataGridView1.Location = new System.Drawing.Point(102, 126);
+            this.extendedDataGridView1.Name = "extendedDataGridView1";
+            this.extendedDataGridView1.Size = new System.Drawing.Size(561, 269);
+            this.extendedDataGridView1.TabIndex = 14;
+            this.extendedDataGridView1.TimeFilter = false;
+            // 
             // ListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.extendedDataGridView1);
             this.Controls.Add(this.buttonAllProd);
             this.Name = "ListForm";
             this.ShowIcon = false;
             this.Text = "Ассортимент";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Assortment_FormClosing);
             this.Load += new System.EventHandler(this.AssortmentForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.extendedDataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -60,5 +75,6 @@
         #endregion
 
         private System.Windows.Forms.Button buttonAllProd;
+        private EDGV.ExtendedDataGridView extendedDataGridView1;
     }
 }
