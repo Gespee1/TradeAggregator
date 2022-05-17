@@ -38,7 +38,7 @@ namespace TradeAggregator
             this.buttonProfileVend = new System.Windows.Forms.Button();
             this.buttonAssortment = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.buttonKU = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.panelNetwork = new System.Windows.Forms.Panel();
@@ -61,7 +61,7 @@ namespace TradeAggregator
             // 
             this.buttonProfile.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonProfile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonProfile.Location = new System.Drawing.Point(3, 60);
+            this.buttonProfile.Location = new System.Drawing.Point(3, 89);
             this.buttonProfile.Name = "buttonProfile";
             this.buttonProfile.Size = new System.Drawing.Size(240, 30);
             this.buttonProfile.TabIndex = 6;
@@ -73,7 +73,7 @@ namespace TradeAggregator
             // 
             this.buttonVendors.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonVendors.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonVendors.Location = new System.Drawing.Point(3, 96);
+            this.buttonVendors.Location = new System.Drawing.Point(3, 125);
             this.buttonVendors.Name = "buttonVendors";
             this.buttonVendors.Size = new System.Drawing.Size(240, 30);
             this.buttonVendors.TabIndex = 7;
@@ -84,7 +84,7 @@ namespace TradeAggregator
             // 
             this.buttonOrder.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonOrder.Location = new System.Drawing.Point(3, 132);
+            this.buttonOrder.Location = new System.Drawing.Point(3, 161);
             this.buttonOrder.Name = "buttonOrder";
             this.buttonOrder.Size = new System.Drawing.Size(240, 30);
             this.buttonOrder.TabIndex = 8;
@@ -96,7 +96,7 @@ namespace TradeAggregator
             // 
             this.buttonKP.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonKP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonKP.Location = new System.Drawing.Point(3, 168);
+            this.buttonKP.Location = new System.Drawing.Point(3, 197);
             this.buttonKP.Name = "buttonKP";
             this.buttonKP.Size = new System.Drawing.Size(240, 30);
             this.buttonKP.TabIndex = 9;
@@ -107,7 +107,7 @@ namespace TradeAggregator
             // 
             this.buttonContracts.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonContracts.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonContracts.Location = new System.Drawing.Point(3, 204);
+            this.buttonContracts.Location = new System.Drawing.Point(3, 233);
             this.buttonContracts.Name = "buttonContracts";
             this.buttonContracts.Size = new System.Drawing.Size(240, 30);
             this.buttonContracts.TabIndex = 10;
@@ -118,7 +118,7 @@ namespace TradeAggregator
             // 
             this.buttonProfileVend.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonProfileVend.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonProfileVend.Location = new System.Drawing.Point(8, 3);
+            this.buttonProfileVend.Location = new System.Drawing.Point(8, 10);
             this.buttonProfileVend.Name = "buttonProfileVend";
             this.buttonProfileVend.Size = new System.Drawing.Size(240, 30);
             this.buttonProfileVend.TabIndex = 12;
@@ -130,7 +130,7 @@ namespace TradeAggregator
             // 
             this.buttonAssortment.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonAssortment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonAssortment.Location = new System.Drawing.Point(8, 39);
+            this.buttonAssortment.Location = new System.Drawing.Point(8, 46);
             this.buttonAssortment.Name = "buttonAssortment";
             this.buttonAssortment.Size = new System.Drawing.Size(240, 30);
             this.buttonAssortment.TabIndex = 13;
@@ -142,40 +142,41 @@ namespace TradeAggregator
             // 
             this.button3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(8, 147);
+            this.button3.Location = new System.Drawing.Point(8, 176);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(240, 30);
             this.button3.TabIndex = 14;
             this.button3.Text = "Договоры";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // buttonKU
             // 
-            this.button4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(8, 75);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(240, 30);
-            this.button4.TabIndex = 15;
-            this.button4.Text = "Коммерческие условия";
-            this.button4.UseVisualStyleBackColor = true;
+            this.buttonKU.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonKU.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonKU.Location = new System.Drawing.Point(8, 82);
+            this.buttonKU.Name = "buttonKU";
+            this.buttonKU.Size = new System.Drawing.Size(240, 30);
+            this.buttonKU.TabIndex = 15;
+            this.buttonKU.Text = "Коммерческие условия";
+            this.buttonKU.UseVisualStyleBackColor = true;
+            this.buttonKU.Click += new System.EventHandler(this.buttonKU_Click);
             // 
             // button6
             // 
             this.button6.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(8, 111);
+            this.button6.Location = new System.Drawing.Point(11, 118);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(240, 30);
+            this.button6.Size = new System.Drawing.Size(240, 52);
             this.button6.TabIndex = 17;
-            this.button6.Text = "Поступившие КП";
+            this.button6.Text = "Поступившие коммерческие предложения";
             this.button6.UseVisualStyleBackColor = true;
             // 
             // button7
             // 
             this.button7.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button7.Location = new System.Drawing.Point(8, 183);
+            this.button7.Location = new System.Drawing.Point(8, 212);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(240, 51);
             this.button7.TabIndex = 18;
@@ -190,9 +191,9 @@ namespace TradeAggregator
             this.panelNetwork.Controls.Add(this.buttonOrder);
             this.panelNetwork.Controls.Add(this.buttonKP);
             this.panelNetwork.Controls.Add(this.buttonContracts);
-            this.panelNetwork.Location = new System.Drawing.Point(12, 68);
+            this.panelNetwork.Location = new System.Drawing.Point(12, 55);
             this.panelNetwork.Name = "panelNetwork";
-            this.panelNetwork.Size = new System.Drawing.Size(250, 237);
+            this.panelNetwork.Size = new System.Drawing.Size(250, 266);
             this.panelNetwork.TabIndex = 19;
             // 
             // panelVendor
@@ -202,18 +203,18 @@ namespace TradeAggregator
             this.panelVendor.Controls.Add(this.buttonAssortment);
             this.panelVendor.Controls.Add(this.button3);
             this.panelVendor.Controls.Add(this.button7);
-            this.panelVendor.Controls.Add(this.button4);
+            this.panelVendor.Controls.Add(this.buttonKU);
             this.panelVendor.Controls.Add(this.button6);
-            this.panelVendor.Location = new System.Drawing.Point(268, 68);
+            this.panelVendor.Location = new System.Drawing.Point(268, 55);
             this.panelVendor.Name = "panelVendor";
-            this.panelVendor.Size = new System.Drawing.Size(251, 237);
+            this.panelVendor.Size = new System.Drawing.Size(251, 266);
             this.panelVendor.TabIndex = 20;
             // 
             // AccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 317);
+            this.ClientSize = new System.Drawing.Size(533, 333);
             this.Controls.Add(this.panelVendor);
             this.Controls.Add(this.panelNetwork);
             this.Controls.Add(this.labelMain);
@@ -240,7 +241,7 @@ namespace TradeAggregator
         private System.Windows.Forms.Button buttonProfileVend;
         private System.Windows.Forms.Button buttonAssortment;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button buttonKU;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Panel panelNetwork;

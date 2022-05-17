@@ -104,6 +104,17 @@ namespace TradeAggregator
             Form OrderForm = new OrderForm(_userID);
             OrderForm.ShowDialog();
         }
+        //открытие формы КУ
+        private void buttonKU_Click(object sender, EventArgs e)
+        {
+            _buttonFlag = 1;
+            Form KU;
+            KU = new ListForm(_userID, _typeIndex, _buttonFlag);
+            KU.ShowDialog();
+
+        }
+
+
 
 
 

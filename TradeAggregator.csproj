@@ -53,6 +53,12 @@
     <Compile Include="AccountForm.Designer.cs">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="InputKUForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputKUForm.Designer.cs">
+      <DependentUpon>InputKUForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +109,9 @@
     <Compile Include="Program.cs" />
     <EmbeddedResource Include="AccountForm.resx">
       <DependentUpon>AccountForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InputKUForm.resx">
+      <DependentUpon>InputKUForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListForm.resx">
       <DependentUpon>ListForm.cs</DependentUpon>
