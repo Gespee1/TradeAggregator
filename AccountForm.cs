@@ -113,8 +113,19 @@ namespace TradeAggregator
             KU.ShowDialog();
 
         }
-
-
+        // Открытие формы списка поставщиков
+        private void buttonVendors_Click(object sender, EventArgs e)
+        {
+            Form KU;
+            KU = new ListForm(_userID, _typeIndex, 0);
+            KU.ShowDialog();
+        }
+        // Открытие формы КП
+        private void buttonKP_Click(object sender, EventArgs e)
+        {
+            Form commOffers = new CommOffers(_userID);
+            commOffers.ShowDialog();
+        }
 
 
 
