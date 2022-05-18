@@ -79,6 +79,7 @@ namespace TradeAggregator
             this.buttonVendors.TabIndex = 7;
             this.buttonVendors.Text = "Поставщики";
             this.buttonVendors.UseVisualStyleBackColor = true;
+            this.buttonVendors.Click += new System.EventHandler(this.buttonVendors_Click);
             // 
             // buttonOrder
             // 
@@ -102,6 +103,7 @@ namespace TradeAggregator
             this.buttonKP.TabIndex = 9;
             this.buttonKP.Text = "Коммерческие предложения";
             this.buttonKP.UseVisualStyleBackColor = true;
+            this.buttonKP.Click += new System.EventHandler(this.buttonKP_Click);
             // 
             // buttonContracts
             // 

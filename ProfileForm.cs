@@ -92,7 +92,7 @@ namespace TradeAggregator
             if (_profileId != 0)
             {
                 command = new SqlCommand($"select rp.Name, p.[Name], p.[UrasticName], p.[INN\\KPP], p.[DirectorName], p.[UrasticAddress], p.[Account]" +
-                    $", p.[BankName], p.[BankBik], p.[CorrAccount] from Profiles p left join ResponsiblePersons rp on rp.RecId = p.RespPerson " +
+                    $", p.[BankName], p.[BankBik], p.[CorrAccount] from Profiles p left join ResponsiblePersons rp on rp.ProfileId = p.RecID " +
                     $"where p.RecID = {_profileId}", _connection);
                 reader = command.ExecuteReader();
                 reader.Read();
@@ -101,10 +101,10 @@ namespace TradeAggregator
                 textBoxName.Text = reader[1].ToString();
                 textBoxUrName.Text = reader[2].ToString();
                 innKpp = reader[3].ToString();
-                if(innKpp.Contains("\\"))
+                if(innKpp.Contains("/"))
                 {
-                    textBoxINN.Text = innKpp.Split('\\')[0];
-                    textBoxKPP.Text = innKpp.Split('\\')[1];
+                    textBoxINN.Text = innKpp.Split('/')[0];
+                    textBoxKPP.Text = innKpp.Split('/')[1];
                 }
                 textBoxDirector.Text = reader[4].ToString();
                 textBoxUrAddress.Text = reader[5].ToString();

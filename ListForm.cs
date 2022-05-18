@@ -88,9 +88,24 @@ namespace TradeAggregator
                 case true:
                     switch (_flag)
                     {
-                        //Ассортимент
+                        // Список поставщиков
                         case 0:
-                           
+                            this.Text = "Список поставщиков";
+                            labelHeader.Text = "Список поставщиков";
+                            buttonAllProd.Visible = false;
+                            buttonImport.Visible = false;
+
+                            SqlCommand command0 = new SqlCommand($"SELECT TOP (1000) [Vendor_id] as 'Номер поставщика', [Name] as 'Наименование', " +
+                                $"[Urastic_name] as 'Юридическое наименование', [INN\\KPP] as 'ИНН\\КПП', " +
+                                $"[Director_name] as 'Директор', [Urastic_address] as 'Юр. адрес', [Account] as 'Счет', [Bank_name] as 'Банк', " +
+                                $"[Bank_bik] as 'БИК банка', [Corr_account] as 'Корр. счет' " +
+                                $"FROM[DataBaseKU].[dbo].[Vendors]", _connection);
+                            DataTable dt0 = new DataTable();
+                            SqlDataAdapter adapt0 = new SqlDataAdapter();
+                            adapt0.SelectCommand = command0;
+
+                            adapt0.Fill(dt0);
+                            dataGridView1.DataSource = dt0;
                             break;
                        
                     }
