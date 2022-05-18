@@ -105,7 +105,7 @@ namespace TradeAggregator
         // Добавление КУ
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            Form FormInputKU = new InputKUForm();
+            Form FormInputKU = new InputKUForm(_userId);
 
             FormInputKU.ShowDialog();
 
@@ -116,6 +116,39 @@ namespace TradeAggregator
         // Изменение выбранного КУ
         private void buttonChange_Click(object sender, EventArgs e)
         {
+            Form FormInputKu = new InputKUForm(Convert.ToInt64(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Код КУ"].Value), _userId);
+            FormInputKu.ShowDialog();
+
+            if (FormInputKu.DialogResult == DialogResult.OK)
+                loadData();
+        }
+
+        // Удаление выбранного КУ
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DialogResult result;
+            DataGridViewRow row = dataGridView1.Rows[dataGridView1.CurrentRow.Index];
+
+            result = MessageBox.Show("Вы уверены, что хотите удалить информацию о коммерческих условиях с поставщиком " +
+                row.Cells["Наименование поставщика"].Value.ToString() + " ?", "Внимание!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+                return;
+
+            // Удаление привязанных к КУ значений в других таблицах
+            SqlCommand command = new SqlCommand($"DELETE FROM Included_products WHERE KU_id = {row.Cells["Код КУ"].Value}", _connection);
+            command.ExecuteNonQuery();
+            command = new SqlCommand($"DELETE FROM Excluded_products WHERE KU_id = {row.Cells["Код КУ"].Value}", _connection);
+            command.ExecuteNonQuery();
+            command = new SqlCommand($"DELETE FROM KU_graph WHERE KUId = {row.Cells["Код КУ"].Value}", _connection);
+            command.ExecuteNonQuery();
+            command = new SqlCommand($"DELETE FROM Terms WHERE KUId = {row.Cells["Код КУ"].Value}", _connection);
+            command.ExecuteNonQuery();
+
+            // Удаление самого КУ
+            command = new SqlCommand("DELETE FROM KU WHERE RecId = " + row.Cells["Код КУ"].Value.ToString(), _connection);
+            command.ExecuteNonQuery();
+
+            loadData();
 
         }
 

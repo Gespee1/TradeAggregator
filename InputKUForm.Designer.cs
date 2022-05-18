@@ -211,6 +211,7 @@
             this.richTextBoxDescription.Size = new System.Drawing.Size(377, 97);
             this.richTextBoxDescription.TabIndex = 3;
             this.richTextBoxDescription.Text = "";
+            this.richTextBoxDescription.TextChanged += new System.EventHandler(this.control_TextChanged);
             // 
             // textBoxStatus
             // 
@@ -279,6 +280,8 @@
             this.comboBoxKUType.Name = "comboBoxKUType";
             this.comboBoxKUType.Size = new System.Drawing.Size(180, 26);
             this.comboBoxKUType.TabIndex = 21;
+            this.comboBoxKUType.SelectedIndexChanged += new System.EventHandler(this.comboBoxKUType_SelectedIndexChanged);
+            this.comboBoxKUType.TextChanged += new System.EventHandler(this.control_TextChanged);
             // 
             // checkBoxOfactured
             // 
@@ -290,6 +293,7 @@
             this.checkBoxOfactured.TabIndex = 19;
             this.checkBoxOfactured.Text = "Только офактуренные";
             this.checkBoxOfactured.UseVisualStyleBackColor = true;
+            this.checkBoxOfactured.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // checkBoxTax
             // 
@@ -301,6 +305,7 @@
             this.checkBoxTax.TabIndex = 17;
             this.checkBoxTax.Text = "Учитывать налог";
             this.checkBoxTax.UseVisualStyleBackColor = true;
+            this.checkBoxTax.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // checkBoxReturn
             // 
@@ -312,6 +317,7 @@
             this.checkBoxReturn.TabIndex = 18;
             this.checkBoxReturn.Text = "Исключить возврат";
             this.checkBoxReturn.UseVisualStyleBackColor = true;
+            this.checkBoxReturn.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // groupBoxPeriod
             // 
@@ -336,6 +342,7 @@
             this.dateTimePickerDateTo.Name = "dateTimePickerDateTo";
             this.dateTimePickerDateTo.Size = new System.Drawing.Size(180, 24);
             this.dateTimePickerDateTo.TabIndex = 24;
+            this.dateTimePickerDateTo.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
             // dateTimePickerDateFrom
             // 
@@ -345,6 +352,7 @@
             this.dateTimePickerDateFrom.Name = "dateTimePickerDateFrom";
             this.dateTimePickerDateFrom.Size = new System.Drawing.Size(180, 24);
             this.dateTimePickerDateFrom.TabIndex = 23;
+            this.dateTimePickerDateFrom.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // labelDateTo
             // 
@@ -381,6 +389,7 @@
             this.comboBoxPeriod.Name = "comboBoxPeriod";
             this.comboBoxPeriod.Size = new System.Drawing.Size(180, 26);
             this.comboBoxPeriod.TabIndex = 22;
+            this.comboBoxPeriod.TextChanged += new System.EventHandler(this.control_TextChanged);
             // 
             // labelPeriod
             // 
@@ -421,12 +430,14 @@
             this.toolStripMenuItemAddTerm.Name = "toolStripMenuItemAddTerm";
             this.toolStripMenuItemAddTerm.Size = new System.Drawing.Size(88, 24);
             this.toolStripMenuItemAddTerm.Text = "Добавить";
+            this.toolStripMenuItemAddTerm.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItemDelTerm
             // 
             this.toolStripMenuItemDelTerm.Name = "toolStripMenuItemDelTerm";
             this.toolStripMenuItemDelTerm.Size = new System.Drawing.Size(77, 24);
             this.toolStripMenuItemDelTerm.Text = "Удалить";
+            this.toolStripMenuItemDelTerm.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // dataGridViewTerms
             // 
@@ -447,6 +458,9 @@
             this.dataGridViewTerms.Size = new System.Drawing.Size(697, 275);
             this.dataGridViewTerms.TabIndex = 0;
             this.dataGridViewTerms.TabStop = false;
+            this.dataGridViewTerms.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
+            this.dataGridViewTerms.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView_RowsAdded);
+            this.dataGridViewTerms.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView_RowsRemoved);
             // 
             // panel3
             // 
@@ -507,6 +521,10 @@
             this.dataGridViewIncluded.Size = new System.Drawing.Size(964, 183);
             this.dataGridViewIncluded.TabIndex = 0;
             this.dataGridViewIncluded.TabStop = false;
+            this.dataGridViewIncluded.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewInEx_CellEndEdit);
+            this.dataGridViewIncluded.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
+            this.dataGridViewIncluded.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView_RowsAdded);
+            this.dataGridViewIncluded.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView_RowsRemoved);
             // 
             // In_prod_id
             // 
@@ -651,6 +669,7 @@
             this.buttonAddAll.TabIndex = 25;
             this.buttonAddAll.Text = "Добавить все";
             this.buttonAddAll.UseVisualStyleBackColor = true;
+            this.buttonAddAll.Click += new System.EventHandler(this.button4_Click);
             // 
             // buttonAddProduct
             // 
@@ -681,6 +700,7 @@
             this.buttonDelete.TabIndex = 28;
             this.buttonDelete.Text = "Удалить";
             this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.button7_Click);
             // 
             // panel4
             // 
@@ -707,6 +727,7 @@
             this.buttonUnapprove.Text = "Отмена утверждения";
             this.buttonUnapprove.UseVisualStyleBackColor = true;
             this.buttonUnapprove.Visible = false;
+            this.buttonUnapprove.Click += new System.EventHandler(this.buttonUnapprove_Click);
             // 
             // buttonCancel
             // 
@@ -719,6 +740,7 @@
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Visible = false;
+            this.buttonCancel.Click += new System.EventHandler(this.cancel_button_Click);
             // 
             // buttonCreateNApprove
             // 
@@ -730,6 +752,7 @@
             this.buttonCreateNApprove.TabIndex = 33;
             this.buttonCreateNApprove.Text = "Создать и утвердить";
             this.buttonCreateNApprove.UseVisualStyleBackColor = true;
+            this.buttonCreateNApprove.Click += new System.EventHandler(this.createNapprove_button_Click);
             // 
             // buttonCreate
             // 
@@ -741,6 +764,7 @@
             this.buttonCreate.TabIndex = 32;
             this.buttonCreate.Text = "Создать";
             this.buttonCreate.UseVisualStyleBackColor = true;
+            this.buttonCreate.Click += new System.EventHandler(this.create_button_Click);
             // 
             // buttonClose
             // 
@@ -753,6 +777,7 @@
             this.buttonClose.Text = "Закрыть";
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Visible = false;
+            this.buttonClose.Click += new System.EventHandler(this.close_button_Click);
             // 
             // FixSum
             // 
