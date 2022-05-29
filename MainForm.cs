@@ -31,6 +31,38 @@ namespace TradeAggregator
 
             CheckState();
             CheckSaveProfile();
+
+
+            // Создание тестовых поставщиков и торговых сетей для табличных частей
+            bool ATTENTION = true;
+            if(!ATTENTION)
+            {
+                DataTable dt1 = new DataTable(), dt2 = new DataTable();
+                Console.WriteLine("Начало запросов");
+                SqlCommand command = new SqlCommand("SELECT TOP (200) p.RecID FROM[Aggregator].[dbo].[Profiles] p order by p.ForeignID", _connection);
+                SqlDataAdapter adapt = new SqlDataAdapter(command);
+                adapt.Fill(dt1);
+
+                command = new SqlCommand("SELECT TOP (200) p.RecID FROM[Aggregator].[dbo].[Profiles] p order by p.ForeignID desc", _connection);
+                adapt = new SqlDataAdapter(command);
+                adapt.Fill(dt2);
+                Console.WriteLine("Запросы выполнены");
+
+                Console.WriteLine("Начало циклов");
+                for (int i = 0; i < 200; i++)
+                {
+                    command = new SqlCommand($"insert into Users values(0, 'Login{i+1}', '{i}n{i+3}f{i+1}', 0, 'PC{i+1}', 'User{i+1}', {dt1.Rows[i][0]})", _connection);
+                    command.ExecuteNonQuery();
+                    Console.WriteLine($"Прогресс: {Math.Round(Convert.ToDouble((i+1)/4), 2)}");
+                }
+                for (int i = 0; i < 200; i++)
+                {
+                    command = new SqlCommand($"insert into Users values(1, 'Login{i+1+200}', '{i}n{i+3}f{i+1}', 0, 'PC{i+1+200}', 'User{i+1+200}', {dt2.Rows[i][0]})", _connection);
+                    command.ExecuteNonQuery();
+                    Console.WriteLine($"Прогресс: {Math.Round(Convert.ToDouble((i + 1) / 4) + 50, 2)}");
+                }
+                Console.WriteLine("Циклы завершились!");
+            }
         }
 
         // Изменения интерфейса для разных режимов

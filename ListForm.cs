@@ -15,8 +15,9 @@ namespace TradeAggregator
     public partial class ListForm : Form
     {
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
-        private Int64 _userId;
+        private Int64 _userId, _extraId;
         private Int32 _flag;
+        private string _extraString;
         bool _typeIndex;
 
        //конструктор принимающий значения
@@ -37,10 +38,14 @@ namespace TradeAggregator
 
         private void loadData()
         {
+            SqlCommand command;
+            SqlDataAdapter adapt;
+            DataTable dt;
+
             buttonAllProd.Visible = false;
             switch (_typeIndex)
             {
-                //поставщик
+                // Пользователь: поставщик
                 case false:
 
                     switch (_flag)
@@ -52,15 +57,14 @@ namespace TradeAggregator
                             buttonAllProd.Visible = true;
                             buttonImport.Visible = true;
 
-                            SqlCommand command0 = new SqlCommand($"Select Products.ProductID as 'Код продукта', ClassifierID as 'Код классификатора', " +
+                            command = new SqlCommand($"Select Products.ProductID as 'Код продукта', ClassifierID as 'Код классификатора', " +
                                 $"Name as 'Наименование', Price as 'Цена, руб.', Qty as 'Количество, шт.', Brand as 'Брэнд', Producer as 'Производитель' " +
                                 $"from Assortment, Products LEFT JOIN BrandProducer ON Products.BrandProdID = BrandProducer.ID where VendorID = {_userId} and Products.ProductID = Assortment.ProductID", _connection);
-                            DataTable dt0 = new DataTable();
-                            SqlDataAdapter adapt0 = new SqlDataAdapter();
-                            adapt0.SelectCommand = command0;
+                            dt = new DataTable();
+                            adapt = new SqlDataAdapter(command);
 
-                            adapt0.Fill(dt0);
-                            dataGridView1.DataSource = dt0;
+                            adapt.Fill(dt);
+                            dataGridView1.DataSource = dt;
                             break;
 
                         //Список КУ
@@ -71,20 +75,19 @@ namespace TradeAggregator
                             buttonChange.Visible = true;
                             buttonDelete.Visible = true;
 
-                            SqlCommand command1 = new SqlCommand($"SELECT RecId As 'Код КУ', DateFrom As 'Дата начала', DateTo As 'Дата конца', Period As 'Период', Status As 'Статус'" +
+                            command = new SqlCommand($"SELECT RecId As 'Код КУ', DateFrom As 'Дата начала', DateTo As 'Дата конца', Period As 'Период', Status As 'Статус'" +
                                 $" FROM KU WHERE VendorId =  {_userId} ", _connection);
 
-                            DataTable dt1 = new DataTable();
-                            SqlDataAdapter adapt1 = new SqlDataAdapter();
-                            adapt1.SelectCommand = command1;
-                            adapt1.Fill(dt1);
-                            dataGridView1.DataSource = dt1;
+                            dt = new DataTable();
+                            adapt = new SqlDataAdapter(command);
+                            adapt.Fill(dt);
+                            dataGridView1.DataSource = dt;
                             break;
                     }
 
                     break;
 
-                //Торговая сеть
+                // Пользователь: Торговая сеть
                 case true:
                     switch (_flag)
                     {
@@ -95,19 +98,37 @@ namespace TradeAggregator
                             buttonAllProd.Visible = false;
                             buttonImport.Visible = false;
 
-                            SqlCommand command0 = new SqlCommand($"SELECT TOP (1000) [Vendor_id] as 'Номер поставщика', [Name] as 'Наименование', " +
+                            command = new SqlCommand($"SELECT TOP (1000) [Vendor_id] as 'Номер поставщика', [Name] as 'Наименование', " +
                                 $"[Urastic_name] as 'Юридическое наименование', [INN\\KPP] as 'ИНН\\КПП', " +
                                 $"[Director_name] as 'Директор', [Urastic_address] as 'Юр. адрес', [Account] as 'Счет', [Bank_name] as 'Банк', " +
                                 $"[Bank_bik] as 'БИК банка', [Corr_account] as 'Корр. счет' " +
-                                $"FROM[DataBaseKU].[dbo].[Vendors]", _connection);
-                            DataTable dt0 = new DataTable();
-                            SqlDataAdapter adapt0 = new SqlDataAdapter();
-                            adapt0.SelectCommand = command0;
+                                $"FROM [DataBaseKU].[dbo].[Vendors]", _connection);
+                            dt = new DataTable();
+                            adapt = new SqlDataAdapter(command);
 
-                            adapt0.Fill(dt0);
-                            dataGridView1.DataSource = dt0;
+                            adapt.Fill(dt);
+                            dataGridView1.DataSource = dt;
+                            dataGridView1.ReadOnly = true;
+                            for(int i = 0; i< dataGridView1.ColumnCount; i++)
+                                dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
                             break;
-                       
+                        // Ассортимент поставщика
+                        case 1:
+                            this.Text = $"Ассортимент поставщика {_extraString}";
+                            labelHeader.Text = $"Ассортимент поставщика {_extraString}";
+                            buttonAllProd.Visible = false;
+                            buttonImport.Visible = false;
+
+                            command = new SqlCommand($"select ... where vendorId = {_extraId}", _connection);
+                            dt = new DataTable();
+                            adapt = new SqlDataAdapter(command);
+
+                            adapt.Fill(dt);
+                            dataGridView1.DataSource = dt;
+                            dataGridView1.ReadOnly = true;
+                            for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                                dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                            break;
                     }
                     break;
 
@@ -116,6 +137,47 @@ namespace TradeAggregator
           
 
         }
+
+        // Двойной клик по строке гриды
+        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            switch (_typeIndex)
+            {
+                // Пользователь: Поставщик
+                case false:
+                    switch (_flag)
+                    {
+                        //Ассортимент
+                        case 0:
+                            
+                            break;
+
+                        //Список КУ
+                        case 1:
+                            
+                            break;
+                    }
+
+                    break;
+
+                // Пользователь: Торговая сеть
+                case true:
+                    switch (_flag)
+                    {
+                        // Список поставщиков
+                        case 0:
+                            _flag = 1;
+                            _extraId = Convert.ToInt64(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Номер поставщика"].Value);
+                            _extraString = dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Наименование"].Value.ToString();
+                            loadData();
+                            break;
+                    }
+                    break;
+
+
+            }
+        }
+
 
         // Добавление КУ
         private void buttonAdd_Click(object sender, EventArgs e)

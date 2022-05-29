@@ -16,7 +16,7 @@ namespace TradeAggregator
     {
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
         private Int64 _userId, _profileId;
-        private bool _canChange, _enableStatus;
+        private bool _canChange, _changeStatus = false;
 
         public ProfileForm()
         {
@@ -36,15 +36,18 @@ namespace TradeAggregator
         {
             _connection.Open();
             dataLoad();
-            setEnabled(_canChange);
-            if (!_canChange)
+            setEnabled();
+            if (!_canChange) // Выключение кнопок при запрете редактирования
+            {
                 button1.Enabled = false;
+                button2.Enabled = false;
+            }
         }
 
         // Выбор режима работы формы
-        private void setEnabled(bool canChange)
+        private void setEnabled()
         {
-            if(!canChange)
+            if(!_changeStatus)
             {
                 comboBoxRespPerson.Enabled = false;
                 textBoxName.Enabled = false;
@@ -57,7 +60,6 @@ namespace TradeAggregator
                 textBoxBankName.Enabled = false;
                 textBoxBankBIK.Enabled = false;
                 textBoxCorrAccount.Enabled = false;
-                _enableStatus = false;
             }
             else
             {
@@ -72,7 +74,6 @@ namespace TradeAggregator
                 textBoxBankName.Enabled = true;
                 textBoxBankBIK.Enabled = true;
                 textBoxCorrAccount.Enabled = true;
-                _enableStatus = true;
             }
         }
 
@@ -128,13 +129,17 @@ namespace TradeAggregator
         // Кнопка переключения режима редактирования и сохранения
         private void button1_Click(object sender, EventArgs e)
         {
-            if (_enableStatus)
+            if (_changeStatus)
             {
-                setEnabled(false);
+                _changeStatus = false;
+                setEnabled();
                 recordData();
             }
             else
-                setEnabled(true);
+            {
+                _changeStatus = true;
+                setEnabled();
+            }
         }
 
         // Запись данных в базу
