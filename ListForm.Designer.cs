@@ -42,7 +42,7 @@
             // 
             this.buttonAllProd.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonAllProd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonAllProd.Location = new System.Drawing.Point(60, 58);
+            this.buttonAllProd.Location = new System.Drawing.Point(12, 58);
             this.buttonAllProd.Name = "buttonAllProd";
             this.buttonAllProd.Size = new System.Drawing.Size(143, 30);
             this.buttonAllProd.TabIndex = 13;
@@ -54,7 +54,7 @@
             // 
             this.labelHeader.AutoSize = true;
             this.labelHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelHeader.Location = new System.Drawing.Point(482, 9);
+            this.labelHeader.Location = new System.Drawing.Point(542, 9);
             this.labelHeader.Name = "labelHeader";
             this.labelHeader.Size = new System.Drawing.Size(99, 20);
             this.labelHeader.TabIndex = 14;
@@ -78,7 +78,7 @@
             // 
             this.buttonImport.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonImport.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonImport.Location = new System.Drawing.Point(221, 58);
+            this.buttonImport.Location = new System.Drawing.Point(173, 58);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(231, 30);
             this.buttonImport.TabIndex = 16;
@@ -125,7 +125,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1071, 513);
+            this.ClientSize = new System.Drawing.Size(1182, 513);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.buttonChange);
             this.Controls.Add(this.buttonDelete);
