@@ -42,8 +42,8 @@ namespace TradeAggregator
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.panelNetwork = new System.Windows.Forms.Panel();
-            this.panelVendor = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
+            this.panelVendor = new System.Windows.Forms.Panel();
             this.panelNetwork.SuspendLayout();
             this.panelVendor.SuspendLayout();
             this.SuspendLayout();
@@ -183,7 +183,7 @@ namespace TradeAggregator
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(240, 51);
             this.button7.TabIndex = 18;
-            this.button7.Text = "График выплат ретро-бонуса";
+            this.button7.Text = "Финансовые-графики";
             this.button7.UseVisualStyleBackColor = true;
             // 
             // panelNetwork
@@ -200,6 +200,17 @@ namespace TradeAggregator
             this.panelNetwork.Size = new System.Drawing.Size(250, 266);
             this.panelNetwork.TabIndex = 19;
             // 
+            // button1
+            // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.Location = new System.Drawing.Point(3, 233);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(240, 30);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Финансовые графики";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // panelVendor
             // 
             this.panelVendor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -213,17 +224,6 @@ namespace TradeAggregator
             this.panelVendor.Name = "panelVendor";
             this.panelVendor.Size = new System.Drawing.Size(251, 266);
             this.panelVendor.TabIndex = 20;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(3, 233);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(240, 30);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Финансовый график";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // AccountForm
             // 
