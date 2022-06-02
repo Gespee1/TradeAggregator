@@ -97,12 +97,24 @@ namespace TradeAggregator
                             labelHeader.Text = "Список поставщиков";
                             buttonAllProd.Visible = false;
                             buttonImport.Visible = false;
+                            buttonBack.Visible = false;
 
-                            command = new SqlCommand($"SELECT TOP (1000) [Vendor_id] as 'Номер поставщика', [Name] as 'Наименование', " +
-                                $"[Urastic_name] as 'Юридическое наименование', [INN\\KPP] as 'ИНН\\КПП', " +
-                                $"[Director_name] as 'Директор', [Urastic_address] as 'Юр. адрес', [Account] as 'Счет', [Bank_name] as 'Банк', " +
-                                $"[Bank_bik] as 'БИК банка', [Corr_account] as 'Корр. счет' " +
-                                $"FROM [DataBaseKU].[dbo].[Vendors]", _connection);
+                            command = new SqlCommand($"SELECT p.[RecID] as 'Номер поставщика'" +
+                                $", p.[Name] as 'Наименование'" +
+                                $", p.[UrasticName] as 'Юр. наименование'" +
+                                $", p.[INN\\KPP] as 'ИНН\\КПП'" +
+                                $", p.[DirectorName] as 'Директор'" +
+                                $", p.[UrasticAddress] as 'Юр. адрес'" +
+                                $", p.[Account] as 'Банковский счет'" +
+                                $", p.[BankName] as 'Наименование банка'" +
+                                $", p.[BankBik] as 'БИК банка'" +
+                                $", p.[CorrAccount] as 'Корр. счет'" +
+                                $",case when(rp.[Name] is null) then '-' " +
+                                $"else rp.[Name] end as 'Ответств. лицо' " +
+                                $"FROM[Aggregator].[dbo].[Users] u " +
+                                $"join[Aggregator].[dbo].[Profiles] p on p.RecID = u.ProfileId " +
+                                $"left join[Aggregator].[dbo].[ResponsiblePersons] rp on rp.RecID = p.RespPerson " +
+                                $"where u.Type = 0", _connection);
                             dt = new DataTable();
                             adapt = new SqlDataAdapter(command);
 
@@ -111,6 +123,26 @@ namespace TradeAggregator
                             dataGridView1.ReadOnly = true;
                             for(int i = 0; i< dataGridView1.ColumnCount; i++)
                                 dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+                            ////////////////////        Автоматическое заполнение ассоритмента одного поставщика
+                            /*Random rnd = new Random();
+                            command = new SqlCommand($"SELECT [ProductID] " +
+                                $"FROM[Aggregator].[dbo].[Products] p " +
+                                $"where p.Name like '%ЛАМА%' " +
+                                $"and p.Name not like '!%'", _connection);
+                            dt = new DataTable();
+                            adapt = new SqlDataAdapter(command);
+                            adapt.Fill(dt);
+                            for(int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                command = new SqlCommand($"insert into Assortment values (19, {dt.Rows[i][0]}, " +
+                                    $"{Math.Round(rnd.Next(20, 500) + rnd.NextDouble(), 2).ToString().Replace(',', '.')}, " +
+                                    $"{rnd.Next(10, 100)})", _connection);
+                                command.ExecuteNonQuery();
+                                Console.WriteLine($"{(i+1)*100/dt.Rows.Count}%");
+                            }*/
+                            /////////////////////////////
+
                             break;
                         // Ассортимент поставщика
                         case 1:
@@ -118,8 +150,25 @@ namespace TradeAggregator
                             labelHeader.Text = $"Ассортимент поставщика {_extraString}";
                             buttonAllProd.Visible = false;
                             buttonImport.Visible = false;
+                            buttonBack.Visible = true;
 
-                            command = new SqlCommand($"select ... where vendorId = {_extraId}", _connection);
+                            command = new SqlCommand($"SELECT p.[ProductID] as 'Код продукта'" +
+                                $", p.[Name] as 'Название'" +
+                                $", case when(c.[L4] is null) then '-' " +
+                                $"else c.[L4] end as 'Код группы товаров'" +
+                                $", case when(c.[L4_name] is null) then '-' " +
+                                $"else c.[L4_name] end as 'Наименование группы товаров'" +
+                                $", case when(bp.[Brand] is null) then '-' " +
+                                $"else bp.[Brand] end as 'Торговая марка'" +
+                                $",case when(bp.[Producer] is null) then '-' " +
+                                $"else bp.[Producer] end as 'Производитель'" +
+                                $",a.[Price] as 'Цена, руб.'" +
+                                $",a.[Qty] as 'Количество' " +
+                                $"FROM[Aggregator].[dbo].[Assortment] a " +
+                                $"left join[Aggregator].[dbo].[Products] p on p.ProductID = a.ProductID " +
+                                $"left join[Aggregator].[dbo].[Classifier] c on c.ForeignID = p.ClassifierID " +
+                                $"left join[Aggregator].[dbo].[BrandProducer] bp on bp.ForeignID = p.BrandProdID " +
+                                $"where a.VendorID = {_extraId}", _connection);
                             dt = new DataTable();
                             adapt = new SqlDataAdapter(command);
 
@@ -168,7 +217,7 @@ namespace TradeAggregator
                         case 0:
                             _flag = 1;
                             _extraId = Convert.ToInt64(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Номер поставщика"].Value);
-                            _extraString = dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Наименование"].Value.ToString();
+                            _extraString = dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Юр. наименование"].Value.ToString();
                             loadData();
                             break;
                     }
@@ -176,6 +225,13 @@ namespace TradeAggregator
 
 
             }
+        }
+
+        // Кнопка возврата к списку поставщиков
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            _flag = 0;
+            loadData();
         }
 
 
