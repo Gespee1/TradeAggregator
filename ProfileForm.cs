@@ -17,6 +17,7 @@ namespace TradeAggregator
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
         private Int64 _userId, _profileId;
         private bool _canChange, _changeStatus = false;
+        public string NewRespPersonName;
 
         public ProfileForm()
         {
@@ -40,7 +41,7 @@ namespace TradeAggregator
             if (!_canChange) // Выключение кнопок при запрете редактирования
             {
                 button1.Enabled = false;
-                button2.Enabled = false;
+                buttonAddRespPerson.Enabled = false;
             }
         }
 
@@ -82,18 +83,16 @@ namespace TradeAggregator
         {
             int newProfileRecId;
             SqlCommand command;
+            SqlDataReader reader;
             string innKpp;
 
-            command = new SqlCommand($"select Name from ResponsiblePersons", _connection);
-            SqlDataReader reader = command.ExecuteReader();
-            while(reader.Read())
-                comboBoxRespPerson.Items.Add(reader[0].ToString());
-            reader.Close();
+            loadRespPersons();
 
             if (_profileId != 0)
             {
                 command = new SqlCommand($"select rp.Name, p.[Name], p.[UrasticName], p.[INN\\KPP], p.[DirectorName], p.[UrasticAddress], p.[Account]" +
-                    $", p.[BankName], p.[BankBik], p.[CorrAccount] from Profiles p left join ResponsiblePersons rp on rp.ProfileId = p.RecID " +
+                    $", p.[BankName], p.[BankBik], p.[CorrAccount] from Profiles p " +
+                    $"left join ResponsiblePersons rp on p.RespPerson = rp.RecID " +
                     $"where p.RecID = {_profileId}", _connection);
                 reader = command.ExecuteReader();
                 reader.Read();
@@ -123,8 +122,19 @@ namespace TradeAggregator
                 newProfileRecId = Convert.ToInt32(command.ExecuteScalar());
                 command = new SqlCommand($"update Users set ProfileId = {newProfileRecId} where RecID = {_userId}", _connection);
                 command.ExecuteNonQuery();
+                _profileId = newProfileRecId;
             }
         }
+        // Загрузка списка ответственных лиц
+        private void loadRespPersons()
+        {
+            SqlCommand command = new SqlCommand($"select Name from ResponsiblePersons", _connection);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+                comboBoxRespPerson.Items.Add(reader[0].ToString());
+            reader.Close();
+        }
+
 
         // Кнопка переключения режима редактирования и сохранения
         private void button1_Click(object sender, EventArgs e)
@@ -133,7 +143,6 @@ namespace TradeAggregator
             {
                 _changeStatus = false;
                 setEnabled();
-                recordData();
             }
             else
             {
@@ -142,13 +151,91 @@ namespace TradeAggregator
             }
         }
 
-        // Запись данных в базу
-        private void recordData()
+        
+        //
+        // Запись в БД измененных данных
+        //
+        // Ответственное лицо
+        private void comboBoxRespPerson_Leave(object sender, EventArgs e)
         {
-
+            SqlCommand command = new SqlCommand($"update Profiles set RespPerson = (select RecID from ResponsiblePersons where Name = " +
+                $"'{comboBoxRespPerson.SelectedItem}') where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // Наименоваине
+        private void textBoxName_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set Name = '{textBoxName.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // Юр. наименоваине
+        private void textBoxUrName_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set UrasticName = '{textBoxUrName.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // ИНН/КПП
+        private void textBoxINN_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set INN\\KPP = '{textBoxINN.Text + '/' + textBoxKPP.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // ИНН/КПП
+        private void textBoxKPP_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set INN\\KPP = '{textBoxINN.Text + '/' + textBoxKPP.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // ФИО директора
+        private void textBoxDirector_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set DirectorName = '{textBoxDirector.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // Юр. адрес
+        private void textBoxUrAddress_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set UrasticAddress = '{textBoxUrAddress.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // Наим. банка
+        private void textBoxBankName_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set BankName = '{textBoxBankName.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // БИК
+        private void textBoxBankBIK_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set BankBik = '{textBoxBankBIK.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // Банковский счет
+        private void textBoxBankAccount_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set Account = '{textBoxBankAccount.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
+        }
+        // Корр. счет
+        private void textBoxCorrAccount_Leave(object sender, EventArgs e)
+        {
+            SqlCommand command = new SqlCommand($"update Profiles set CorrAccount = '{textBoxCorrAccount.Text}' where RecID = {_profileId}", _connection);
+            command.ExecuteNonQuery();
         }
 
 
+        // Открытие формы создания отв. лица
+        private void buttonAddRespPerson_Click(object sender, EventArgs e)
+        {
+            Form addRP = new AddRespPersonForm(this);
+            DialogResult dr = addRP.ShowDialog();
+            if(dr == DialogResult.OK)
+            {
+                loadRespPersons();
+                Console.WriteLine(NewRespPersonName);
+                comboBoxRespPerson.SelectedItem = NewRespPersonName;
+            }
+        }
 
         // Закрытие формы
         private void ProfileForm_FormClosing(object sender, FormClosingEventArgs e)

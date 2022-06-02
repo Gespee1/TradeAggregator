@@ -54,7 +54,7 @@ namespace TradeAggregator
             this.textBoxCorrAccount = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonAddRespPerson = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -95,6 +95,7 @@ namespace TradeAggregator
             this.comboBoxRespPerson.Name = "comboBoxRespPerson";
             this.comboBoxRespPerson.Size = new System.Drawing.Size(301, 26);
             this.comboBoxRespPerson.TabIndex = 3;
+            this.comboBoxRespPerson.Leave += new System.EventHandler(this.comboBoxRespPerson_Leave);
             // 
             // label3
             // 
@@ -114,6 +115,7 @@ namespace TradeAggregator
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(330, 26);
             this.textBoxName.TabIndex = 5;
+            this.textBoxName.Leave += new System.EventHandler(this.textBoxName_Leave);
             // 
             // label4
             // 
@@ -133,6 +135,7 @@ namespace TradeAggregator
             this.textBoxUrName.Name = "textBoxUrName";
             this.textBoxUrName.Size = new System.Drawing.Size(330, 26);
             this.textBoxUrName.TabIndex = 7;
+            this.textBoxUrName.Leave += new System.EventHandler(this.textBoxUrName_Leave);
             // 
             // label5
             // 
@@ -162,6 +165,7 @@ namespace TradeAggregator
             this.textBoxINN.Name = "textBoxINN";
             this.textBoxINN.Size = new System.Drawing.Size(127, 26);
             this.textBoxINN.TabIndex = 10;
+            this.textBoxINN.Leave += new System.EventHandler(this.textBoxINN_Leave);
             // 
             // textBoxKPP
             // 
@@ -171,6 +175,7 @@ namespace TradeAggregator
             this.textBoxKPP.Name = "textBoxKPP";
             this.textBoxKPP.Size = new System.Drawing.Size(127, 26);
             this.textBoxKPP.TabIndex = 11;
+            this.textBoxKPP.Leave += new System.EventHandler(this.textBoxKPP_Leave);
             // 
             // label7
             // 
@@ -190,6 +195,7 @@ namespace TradeAggregator
             this.textBoxDirector.Name = "textBoxDirector";
             this.textBoxDirector.Size = new System.Drawing.Size(330, 26);
             this.textBoxDirector.TabIndex = 13;
+            this.textBoxDirector.Leave += new System.EventHandler(this.textBoxDirector_Leave);
             // 
             // label8
             // 
@@ -209,6 +215,7 @@ namespace TradeAggregator
             this.textBoxUrAddress.Name = "textBoxUrAddress";
             this.textBoxUrAddress.Size = new System.Drawing.Size(330, 26);
             this.textBoxUrAddress.TabIndex = 15;
+            this.textBoxUrAddress.Leave += new System.EventHandler(this.textBoxUrAddress_Leave);
             // 
             // label9
             // 
@@ -228,6 +235,7 @@ namespace TradeAggregator
             this.textBoxBankName.Name = "textBoxBankName";
             this.textBoxBankName.Size = new System.Drawing.Size(330, 26);
             this.textBoxBankName.TabIndex = 17;
+            this.textBoxBankName.Leave += new System.EventHandler(this.textBoxBankName_Leave);
             // 
             // textBoxBankBIK
             // 
@@ -237,6 +245,7 @@ namespace TradeAggregator
             this.textBoxBankBIK.Name = "textBoxBankBIK";
             this.textBoxBankBIK.Size = new System.Drawing.Size(186, 26);
             this.textBoxBankBIK.TabIndex = 18;
+            this.textBoxBankBIK.Leave += new System.EventHandler(this.textBoxBankBIK_Leave);
             // 
             // label10
             // 
@@ -266,6 +275,7 @@ namespace TradeAggregator
             this.textBoxBankAccount.Name = "textBoxBankAccount";
             this.textBoxBankAccount.Size = new System.Drawing.Size(186, 26);
             this.textBoxBankAccount.TabIndex = 21;
+            this.textBoxBankAccount.Leave += new System.EventHandler(this.textBoxBankAccount_Leave);
             // 
             // textBoxCorrAccount
             // 
@@ -275,6 +285,7 @@ namespace TradeAggregator
             this.textBoxCorrAccount.Name = "textBoxCorrAccount";
             this.textBoxCorrAccount.Size = new System.Drawing.Size(186, 26);
             this.textBoxCorrAccount.TabIndex = 22;
+            this.textBoxCorrAccount.Leave += new System.EventHandler(this.textBoxCorrAccount_Leave);
             // 
             // label12
             // 
@@ -298,22 +309,23 @@ namespace TradeAggregator
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // buttonAddRespPerson
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(762, 33);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(26, 28);
-            this.button2.TabIndex = 25;
-            this.button2.Text = "+";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonAddRespPerson.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAddRespPerson.Location = new System.Drawing.Point(762, 33);
+            this.buttonAddRespPerson.Name = "buttonAddRespPerson";
+            this.buttonAddRespPerson.Size = new System.Drawing.Size(26, 28);
+            this.buttonAddRespPerson.TabIndex = 25;
+            this.buttonAddRespPerson.Text = "+";
+            this.buttonAddRespPerson.UseVisualStyleBackColor = true;
+            this.buttonAddRespPerson.Click += new System.EventHandler(this.buttonAddRespPerson_Click);
             // 
             // ProfileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 377);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonAddRespPerson);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBoxCorrAccount);
@@ -376,6 +388,6 @@ namespace TradeAggregator
         private System.Windows.Forms.TextBox textBoxCorrAccount;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonAddRespPerson;
     }
 }

@@ -53,11 +53,17 @@
     <Compile Include="AccountForm.Designer.cs">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommOffers.cs">
+    <Compile Include="AddRespPersonForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CommOffers.Designer.cs">
-      <DependentUpon>CommOffers.cs</DependentUpon>
+    <Compile Include="AddRespPersonForm.Designer.cs">
+      <DependentUpon>AddRespPersonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommOffersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommOffersForm.Designer.cs">
+      <DependentUpon>CommOffersForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InputKUForm.cs">
       <SubType>Form</SubType>
@@ -116,8 +122,11 @@
     <EmbeddedResource Include="AccountForm.resx">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommOffers.resx">
-      <DependentUpon>CommOffers.cs</DependentUpon>
+    <EmbeddedResource Include="AddRespPersonForm.resx">
+      <DependentUpon>AddRespPersonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommOffersForm.resx">
+      <DependentUpon>CommOffersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InputKUForm.resx">
       <DependentUpon>InputKUForm.cs</DependentUpon>

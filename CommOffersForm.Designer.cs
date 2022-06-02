@@ -1,7 +1,7 @@
 ﻿
 namespace TradeAggregator
 {
-    partial class CommOffers
+    partial class CommOffersForm
     {
         /// <summary>
         /// Required designer variable.

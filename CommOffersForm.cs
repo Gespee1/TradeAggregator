@@ -12,16 +12,16 @@ using System.Windows.Forms;
 
 namespace TradeAggregator
 {
-    public partial class CommOffers : Form
+    public partial class CommOffersForm : Form
     {
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
         private Int64 _userID;
 
-        public CommOffers()
+        public CommOffersForm()
         {
             InitializeComponent();
         }
-        public CommOffers(Int64 userId)
+        public CommOffersForm(Int64 userId)
         {
             _userID = userId;
             InitializeComponent();
