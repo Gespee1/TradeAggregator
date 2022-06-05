@@ -127,9 +127,21 @@ namespace TradeAggregator
             commOffers.ShowDialog();
         }
 
+        //Открытие формы полученных КП
+        private void buttonReceivedKP_Click(object sender, EventArgs e)
+        {
+            _buttonFlag = 2;
+            Form receivedComOffers = new ListForm(_userID, _typeIndex, _buttonFlag);
+            receivedComOffers.ShowDialog();
+        }
 
-
-
+        //Открытие формы списка Договоров
+        private void buttonCont_Click(object sender, EventArgs e)
+        {
+            _buttonFlag = 4;
+            Form Contracts = new ListForm(_userID, _typeIndex, _buttonFlag);
+            Contracts.ShowDialog();
+        }
 
 
         // Закрытие формы

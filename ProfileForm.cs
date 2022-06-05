@@ -116,7 +116,7 @@ namespace TradeAggregator
             }
             else
             {
-                command = new SqlCommand($"insert into Profiles values (0, '', '', '', '', '', '', '', '', '')", _connection);
+                command = new SqlCommand($"insert into Profiles values (0, '', '', '', '', '', '', '', '', '', '')", _connection);
                 command.ExecuteNonQuery();
                 command = new SqlCommand("SELECT SCOPE_IDENTITY()", _connection); // Получение только что добавленного ид
                 newProfileRecId = Convert.ToInt32(command.ExecuteScalar());

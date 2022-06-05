@@ -36,6 +36,8 @@
             this.buttonChange = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonBack = new System.Windows.Forms.Button();
+            this.buttonAccept = new System.Windows.Forms.Button();
+            this.buttonDecline = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -138,11 +140,35 @@
             this.buttonBack.Visible = false;
             this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
             // 
+            // buttonAccept
+            // 
+            this.buttonAccept.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonAccept.Location = new System.Drawing.Point(463, 58);
+            this.buttonAccept.Name = "buttonAccept";
+            this.buttonAccept.Size = new System.Drawing.Size(95, 29);
+            this.buttonAccept.TabIndex = 21;
+            this.buttonAccept.Text = "Принять";
+            this.buttonAccept.UseVisualStyleBackColor = true;
+            this.buttonAccept.Visible = false;
+            // 
+            // buttonDecline
+            // 
+            this.buttonDecline.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonDecline.Location = new System.Drawing.Point(564, 58);
+            this.buttonDecline.Name = "buttonDecline";
+            this.buttonDecline.Size = new System.Drawing.Size(102, 29);
+            this.buttonDecline.TabIndex = 22;
+            this.buttonDecline.Text = "Отклонить";
+            this.buttonDecline.UseVisualStyleBackColor = true;
+            this.buttonDecline.Visible = false;
+            // 
             // ListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1182, 513);
+            this.Controls.Add(this.buttonAccept);
+            this.Controls.Add(this.buttonDecline);
             this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.buttonChange);
@@ -172,5 +198,7 @@
         private System.Windows.Forms.Button buttonChange;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonBack;
+        private System.Windows.Forms.Button buttonAccept;
+        private System.Windows.Forms.Button buttonDecline;
     }
 }

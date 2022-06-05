@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
@@ -77,6 +77,64 @@ namespace TradeAggregator
 
                             command = new SqlCommand($"SELECT RecId As 'Код КУ', DateFrom As 'Дата начала', DateTo As 'Дата конца', Period As 'Период', Status As 'Статус'" +
                                 $" FROM KU WHERE VendorId =  {_userId} ", _connection);
+
+                            dt = new DataTable();
+                            adapt = new SqlDataAdapter(command);
+                            adapt.Fill(dt);
+                            dataGridView1.DataSource = dt;
+                            break;
+
+                        //Список поступивших КП
+                        case 2:
+                            buttonAccept.Visible = false;
+                            buttonDecline.Visible = false;
+                            buttonBack.Visible = false;
+                            this.Text = "Поступившие коммерческие предложения";
+                            labelHeader.Text = "Поступившие коммерческие предложения";
+
+                            command = new SqlCommand($"SELECT CommercialOffers.RecId As 'Код КП', Date As 'Дата', Name As 'Торговая компания', Status As 'Статус'" +
+                                $" FROM CommercialOffers, Profiles WHERE VendorId =  {_userId} AND Profiles.RecId = NetworkId", _connection);
+
+                            dt = new DataTable();
+                            adapt = new SqlDataAdapter(command);
+                            adapt.Fill(dt);                        
+                            dataGridView1.DataSource = dt;
+
+                           /* for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                            {
+                                string status = Convert.ToString(dataGridView1.Rows[i].Cells[3]);
+
+                                status = status.Replace("0", "Не просмотрено");
+                                dataGridView1.Rows[i].Cells[3].Value = status;
+                            }*/
+                            break;
+
+                            //Список поступивших КП строки
+                             case 3:
+                            buttonBack.Visible = true;
+                            buttonAccept.Visible = true;
+                            buttonDecline.Visible = true;
+                            this.Text = "Товары коммерческого предложения";
+                                 labelHeader.Text = "Товары коммерческого предложения";
+
+                                 command = new SqlCommand($"SELECT  CommercialOfferLines.ProductId As 'Код товара',  CommercialOfferLines.ClassifierId As 'Код классификатора', " +
+                                     $"Products.Name As 'Наименование товара', Qty As 'Количество, шт.'" +
+                                     $" FROM  CommercialOfferLines, Products WHERE CommercialOfferId = '{_extraId}'" +
+                                     $" AND Products.ProductID = CommercialOfferLines.ProductId", _connection);
+
+                                 dt = new DataTable();
+                                 adapt = new SqlDataAdapter(command);
+                                 adapt.Fill(dt);
+                                 dataGridView1.DataSource = dt;
+                                 break;
+
+                            //Договоры
+                            case 4:
+                            this.Text = "Заключенные договоры";
+                            labelHeader.Text = "Заключенные договоры";
+
+                            command = new SqlCommand($"SELECT  Contracts.RecId As 'Код договора',  Contracts.CommercialOfferId As 'Код коммерческого предложения', " +
+                                $" Contracts.Date As 'Date' FROM  CommercialOffers, Contracts WHERE Contracts.CommercialOfferId = CommercialOffers.RecId AND VendorId = '{_userId}'", _connection);
 
                             dt = new DataTable();
                             adapt = new SqlDataAdapter(command);
@@ -205,6 +263,13 @@ namespace TradeAggregator
                         case 1:
                             
                             break;
+
+                        //Поступившие КП
+                        case 2:
+                            _extraId = Convert.ToInt64(dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Код КП"].Value);
+                            _flag = 3;
+                            loadData();
+                            break;
                     }
 
                     break;
@@ -220,6 +285,8 @@ namespace TradeAggregator
                             _extraString = dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Юр. наименование"].Value.ToString();
                             loadData();
                             break;
+
+                         
                     }
                     break;
 
@@ -230,7 +297,18 @@ namespace TradeAggregator
         // Кнопка возврата к списку поставщиков
         private void buttonBack_Click(object sender, EventArgs e)
         {
-            _flag = 0;
+            switch (_flag)
+            {
+                // Список поставщиков
+                case 1:
+                    _flag = 0;
+                    break;
+
+                case 3:
+                    _flag = 2;
+                    break;
+            }
+            
             loadData();
         }
 

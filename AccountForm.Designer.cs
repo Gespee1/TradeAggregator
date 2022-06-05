@@ -37,9 +37,9 @@ namespace TradeAggregator
             this.buttonContracts = new System.Windows.Forms.Button();
             this.buttonProfileVend = new System.Windows.Forms.Button();
             this.buttonAssortment = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.buttonCont = new System.Windows.Forms.Button();
             this.buttonKU = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.buttonReceivedKP = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.panelNetwork = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
@@ -141,16 +141,17 @@ namespace TradeAggregator
             this.buttonAssortment.UseVisualStyleBackColor = true;
             this.buttonAssortment.Click += new System.EventHandler(this.buttonAssortment_Click);
             // 
-            // button3
+            // buttonCont
             // 
-            this.button3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(8, 197);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(240, 30);
-            this.button3.TabIndex = 14;
-            this.button3.Text = "Договоры";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonCont.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonCont.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCont.Location = new System.Drawing.Point(8, 197);
+            this.buttonCont.Name = "buttonCont";
+            this.buttonCont.Size = new System.Drawing.Size(240, 30);
+            this.buttonCont.TabIndex = 14;
+            this.buttonCont.Text = "Договоры";
+            this.buttonCont.UseVisualStyleBackColor = true;
+            this.buttonCont.Click += new System.EventHandler(this.buttonCont_Click);
             // 
             // buttonKU
             // 
@@ -164,16 +165,17 @@ namespace TradeAggregator
             this.buttonKU.UseVisualStyleBackColor = true;
             this.buttonKU.Click += new System.EventHandler(this.buttonKU_Click);
             // 
-            // button6
+            // buttonReceivedKP
             // 
-            this.button6.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(11, 139);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(240, 52);
-            this.button6.TabIndex = 17;
-            this.button6.Text = "Поступившие коммерческие предложения";
-            this.button6.UseVisualStyleBackColor = true;
+            this.buttonReceivedKP.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonReceivedKP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonReceivedKP.Location = new System.Drawing.Point(11, 139);
+            this.buttonReceivedKP.Name = "buttonReceivedKP";
+            this.buttonReceivedKP.Size = new System.Drawing.Size(240, 52);
+            this.buttonReceivedKP.TabIndex = 17;
+            this.buttonReceivedKP.Text = "Поступившие коммерческие предложения";
+            this.buttonReceivedKP.UseVisualStyleBackColor = true;
+            this.buttonReceivedKP.Click += new System.EventHandler(this.buttonReceivedKP_Click);
             // 
             // button7
             // 
@@ -216,10 +218,10 @@ namespace TradeAggregator
             this.panelVendor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panelVendor.Controls.Add(this.buttonProfileVend);
             this.panelVendor.Controls.Add(this.buttonAssortment);
-            this.panelVendor.Controls.Add(this.button3);
+            this.panelVendor.Controls.Add(this.buttonCont);
             this.panelVendor.Controls.Add(this.button7);
             this.panelVendor.Controls.Add(this.buttonKU);
-            this.panelVendor.Controls.Add(this.button6);
+            this.panelVendor.Controls.Add(this.buttonReceivedKP);
             this.panelVendor.Location = new System.Drawing.Point(268, 55);
             this.panelVendor.Name = "panelVendor";
             this.panelVendor.Size = new System.Drawing.Size(251, 266);
@@ -255,9 +257,9 @@ namespace TradeAggregator
         private System.Windows.Forms.Button buttonContracts;
         private System.Windows.Forms.Button buttonProfileVend;
         private System.Windows.Forms.Button buttonAssortment;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonCont;
         private System.Windows.Forms.Button buttonKU;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button buttonReceivedKP;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Panel panelNetwork;
         private System.Windows.Forms.Panel panelVendor;
