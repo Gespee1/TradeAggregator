@@ -735,7 +735,7 @@ namespace TradeAggregator
             addLine("Все");
         }
 
-       /* // Открытие формы выбора категории
+        // Открытие формы выбора категории
         private void btnSelectCategory_Click(object sender, EventArgs e)
         {
             _CategoryID.Clear();
@@ -768,7 +768,7 @@ namespace TradeAggregator
             {
                 MessageBox.Show("Выберите поставщика", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }*/
+        }
         
         // Кнопка удаления строки в таблицах вкл/иск товаров
         private void button7_Click(object sender, EventArgs e) // was: 606-640, now: 606-624

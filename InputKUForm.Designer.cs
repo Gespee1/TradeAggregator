@@ -58,6 +58,10 @@
             this.toolStripMenuItemAddTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDelTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewTerms = new System.Windows.Forms.DataGridView();
+            this.FixSum = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Criterion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PercentSum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tabControlInEx = new System.Windows.Forms.TabControl();
             this.tabPageToInclude = new System.Windows.Forms.TabPage();
@@ -88,10 +92,6 @@
             this.buttonCreateNApprove = new System.Windows.Forms.Button();
             this.buttonCreate = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
-            this.FixSum = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Criterion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PercentSum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControlMain.SuspendLayout();
@@ -462,6 +462,28 @@
             this.dataGridViewTerms.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView_RowsAdded);
             this.dataGridViewTerms.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView_RowsRemoved);
             // 
+            // FixSum
+            // 
+            this.FixSum.HeaderText = "Фиксированная сумма, руб.";
+            this.FixSum.Name = "FixSum";
+            this.FixSum.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.FixSum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Criterion
+            // 
+            this.Criterion.HeaderText = "Критерий, шт.";
+            this.Criterion.Name = "Criterion";
+            // 
+            // PercentSum
+            // 
+            this.PercentSum.HeaderText = "Процент/Сумма за период";
+            this.PercentSum.Name = "PercentSum";
+            // 
+            // Total
+            // 
+            this.Total.HeaderText = "Итого по премии";
+            this.Total.Name = "Total";
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.tabControlInEx);
@@ -680,6 +702,7 @@
             this.buttonAddProduct.TabIndex = 27;
             this.buttonAddProduct.Text = "Добавить товар";
             this.buttonAddProduct.UseVisualStyleBackColor = true;
+            this.buttonAddProduct.Click += new System.EventHandler(this.button5_Click);
             // 
             // buttonAddCategory
             // 
@@ -690,6 +713,7 @@
             this.buttonAddCategory.TabIndex = 26;
             this.buttonAddCategory.Text = "Добавить категорию";
             this.buttonAddCategory.UseVisualStyleBackColor = true;
+            this.buttonAddCategory.Click += new System.EventHandler(this.btnSelectCategory_Click);
             // 
             // buttonDelete
             // 
@@ -778,28 +802,6 @@
             this.buttonClose.UseVisualStyleBackColor = true;
             this.buttonClose.Visible = false;
             this.buttonClose.Click += new System.EventHandler(this.close_button_Click);
-            // 
-            // FixSum
-            // 
-            this.FixSum.HeaderText = "Фиксированная сумма, руб.";
-            this.FixSum.Name = "FixSum";
-            this.FixSum.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.FixSum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Criterion
-            // 
-            this.Criterion.HeaderText = "Критерий, шт.";
-            this.Criterion.Name = "Criterion";
-            // 
-            // PercentSum
-            // 
-            this.PercentSum.HeaderText = "Процент/Сумма за период";
-            this.PercentSum.Name = "PercentSum";
-            // 
-            // Total
-            // 
-            this.Total.HeaderText = "Итого по премии";
-            this.Total.Name = "Total";
             // 
             // InputKUForm
             // 
