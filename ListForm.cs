@@ -75,6 +75,7 @@ namespace TradeAggregator
                             buttonAdd.Visible = true;
                             buttonChange.Visible = true;
                             buttonDelete.Visible = true;
+                            menuStrip1.Visible = true;
 
                             command = new SqlCommand($"SELECT RecId As 'Код КУ', DateFrom As 'Дата начала', DateTo As 'Дата конца', Period As 'Период', Status As 'Статус'" +
                                 $" FROM KU WHERE VendorId =  {_userId} ", _connection);

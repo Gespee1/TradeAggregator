@@ -40,7 +40,7 @@ namespace TradeAggregator
             this.buttonCont = new System.Windows.Forms.Button();
             this.buttonKU = new System.Windows.Forms.Button();
             this.buttonReceivedKP = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.buttonGraph = new System.Windows.Forms.Button();
             this.panelNetwork = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.panelVendor = new System.Windows.Forms.Panel();
@@ -177,16 +177,17 @@ namespace TradeAggregator
             this.buttonReceivedKP.UseVisualStyleBackColor = true;
             this.buttonReceivedKP.Click += new System.EventHandler(this.buttonReceivedKP_Click);
             // 
-            // button7
+            // buttonGraph
             // 
-            this.button7.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button7.Location = new System.Drawing.Point(8, 233);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(240, 30);
-            this.button7.TabIndex = 18;
-            this.button7.Text = "Финансовые-графики";
-            this.button7.UseVisualStyleBackColor = true;
+            this.buttonGraph.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonGraph.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonGraph.Location = new System.Drawing.Point(8, 233);
+            this.buttonGraph.Name = "buttonGraph";
+            this.buttonGraph.Size = new System.Drawing.Size(240, 30);
+            this.buttonGraph.TabIndex = 18;
+            this.buttonGraph.Text = "Финансовые-графики";
+            this.buttonGraph.UseVisualStyleBackColor = true;
+            this.buttonGraph.Click += new System.EventHandler(this.buttonGraph_Click);
             // 
             // panelNetwork
             // 
@@ -219,7 +220,7 @@ namespace TradeAggregator
             this.panelVendor.Controls.Add(this.buttonProfileVend);
             this.panelVendor.Controls.Add(this.buttonAssortment);
             this.panelVendor.Controls.Add(this.buttonCont);
-            this.panelVendor.Controls.Add(this.button7);
+            this.panelVendor.Controls.Add(this.buttonGraph);
             this.panelVendor.Controls.Add(this.buttonKU);
             this.panelVendor.Controls.Add(this.buttonReceivedKP);
             this.panelVendor.Location = new System.Drawing.Point(268, 55);
@@ -260,7 +261,7 @@ namespace TradeAggregator
         private System.Windows.Forms.Button buttonCont;
         private System.Windows.Forms.Button buttonKU;
         private System.Windows.Forms.Button buttonReceivedKP;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button buttonGraph;
         private System.Windows.Forms.Panel panelNetwork;
         private System.Windows.Forms.Panel panelVendor;
         private System.Windows.Forms.Button button1;
