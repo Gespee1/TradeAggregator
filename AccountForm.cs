@@ -123,7 +123,7 @@ namespace TradeAggregator
         // Открытие формы КП
         private void buttonKP_Click(object sender, EventArgs e)
         {
-            Form commOffers = new CommOffersForm(_userID);
+            Form commOffers = new CommOffersForm(_userID, _typeIndex);
             commOffers.ShowDialog();
         }
 

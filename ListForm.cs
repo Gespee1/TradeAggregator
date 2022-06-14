@@ -184,16 +184,16 @@ namespace TradeAggregator
 
                             ////////////////////        Автоматическое заполнение ассоритмента одного поставщика
                             /*Random rnd = new Random();
-                            command = new SqlCommand($"SELECT [ProductID] " +
+                            command = new SqlCommand($"SELECT top(600) [ProductID] " +
                                 $"FROM[Aggregator].[dbo].[Products] p " +
-                                $"where p.Name like '%ЛАМА%' " +
-                                $"and p.Name not like '!%'", _connection);
+                                $"where p.ClassifierID = 5637274411 " +
+                                $"order by p.ProductID", _connection);
                             dt = new DataTable();
                             adapt = new SqlDataAdapter(command);
                             adapt.Fill(dt);
                             for(int i = 0; i < dt.Rows.Count; i++)
                             {
-                                command = new SqlCommand($"insert into Assortment values (19, {dt.Rows[i][0]}, " +
+                                command = new SqlCommand($"insert into Assortment values (36, {dt.Rows[i][0]}, " +
                                     $"{Math.Round(rnd.Next(20, 500) + rnd.NextDouble(), 2).ToString().Replace(',', '.')}, " +
                                     $"{rnd.Next(10, 100)})", _connection);
                                 command.ExecuteNonQuery();
