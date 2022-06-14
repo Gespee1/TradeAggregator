@@ -58,8 +58,9 @@ namespace TradeAggregator
                             buttonImport.Visible = true;
 
                             command = new SqlCommand($"Select Products.ProductID as 'Код продукта', ClassifierID as 'Код классификатора', " +
-                                $"Name as 'Наименование', Price as 'Цена, руб.', Qty as 'Количество, шт.', Brand as 'Брэнд', Producer as 'Производитель' " +
-                                $"from Assortment, Products LEFT JOIN BrandProducer ON Products.BrandProdID = BrandProducer.ID where VendorID = {_userId} and Products.ProductID = Assortment.ProductID", _connection);
+                                $"Products.Name as 'Наименование', Price as 'Цена, руб.', Qty as 'Количество, шт.' " +
+                                $"from Assortment, Products, Profiles, Users " +
+                                $"where VendorID = Profiles.RecID And Profiles.RecID = Users.ProfileID AND Users.RecID = {_userId} and Products.ProductID = Assortment.ProductID", _connection);
                             dt = new DataTable();
                             adapt = new SqlDataAdapter(command);
 
@@ -74,6 +75,7 @@ namespace TradeAggregator
                             buttonAdd.Visible = true;
                             buttonChange.Visible = true;
                             buttonDelete.Visible = true;
+                            menuStrip1.Visible = true;
 
                             command = new SqlCommand($"SELECT RecId As 'Код КУ', DateFrom As 'Дата начала', DateTo As 'Дата конца', Period As 'Период', Status As 'Статус'" +
                                 $" FROM KU WHERE VendorId =  {_userId} ", _connection);

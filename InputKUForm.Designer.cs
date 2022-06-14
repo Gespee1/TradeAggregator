@@ -58,6 +58,10 @@
             this.toolStripMenuItemAddTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDelTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewTerms = new System.Windows.Forms.DataGridView();
+            this.FixSum = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Criterion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PercentSum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tabControlInEx = new System.Windows.Forms.TabControl();
             this.tabPageToInclude = new System.Windows.Forms.TabPage();
@@ -88,10 +92,12 @@
             this.buttonCreateNApprove = new System.Windows.Forms.Button();
             this.buttonCreate = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
-            this.FixSum = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Criterion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PercentSum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPageSale = new System.Windows.Forms.TabPage();
+            this.dataGridViewSale = new System.Windows.Forms.DataGridView();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.SalePercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControlMain.SuspendLayout();
@@ -109,6 +115,9 @@
             this.tabPageToExclude.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcluded)).BeginInit();
             this.panel4.SuspendLayout();
+            this.tabPageSale.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSale)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -147,7 +156,8 @@
             // 
             this.tabControlMain.Controls.Add(this.tabPageMain);
             this.tabControlMain.Controls.Add(this.tabPageBonus);
-            this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlMain.Controls.Add(this.tabPageSale);
+            this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControlMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabControlMain.Location = new System.Drawing.Point(12, 0);
             this.tabControlMain.Name = "tabControlMain";
@@ -462,6 +472,28 @@
             this.dataGridViewTerms.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView_RowsAdded);
             this.dataGridViewTerms.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView_RowsRemoved);
             // 
+            // FixSum
+            // 
+            this.FixSum.HeaderText = "Фиксированная сумма, руб.";
+            this.FixSum.Name = "FixSum";
+            this.FixSum.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.FixSum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Criterion
+            // 
+            this.Criterion.HeaderText = "Критерий, шт.";
+            this.Criterion.Name = "Criterion";
+            // 
+            // PercentSum
+            // 
+            this.PercentSum.HeaderText = "Процент/Сумма за период";
+            this.PercentSum.Name = "PercentSum";
+            // 
+            // Total
+            // 
+            this.Total.HeaderText = "Итого по премии";
+            this.Total.Name = "Total";
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.tabControlInEx);
@@ -680,6 +712,7 @@
             this.buttonAddProduct.TabIndex = 27;
             this.buttonAddProduct.Text = "Добавить товар";
             this.buttonAddProduct.UseVisualStyleBackColor = true;
+            this.buttonAddProduct.Click += new System.EventHandler(this.button5_Click);
             // 
             // buttonAddCategory
             // 
@@ -690,6 +723,7 @@
             this.buttonAddCategory.TabIndex = 26;
             this.buttonAddCategory.Text = "Добавить категорию";
             this.buttonAddCategory.UseVisualStyleBackColor = true;
+            this.buttonAddCategory.Click += new System.EventHandler(this.btnSelectCategory_Click);
             // 
             // buttonDelete
             // 
@@ -779,27 +813,65 @@
             this.buttonClose.Visible = false;
             this.buttonClose.Click += new System.EventHandler(this.close_button_Click);
             // 
-            // FixSum
+            // tabPageSale
             // 
-            this.FixSum.HeaderText = "Фиксированная сумма, руб.";
-            this.FixSum.Name = "FixSum";
-            this.FixSum.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.FixSum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.tabPageSale.Controls.Add(this.menuStrip1);
+            this.tabPageSale.Controls.Add(this.dataGridViewSale);
+            this.tabPageSale.Location = new System.Drawing.Point(4, 25);
+            this.tabPageSale.Name = "tabPageSale";
+            this.tabPageSale.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSale.Size = new System.Drawing.Size(1169, 315);
+            this.tabPageSale.TabIndex = 2;
+            this.tabPageSale.Text = "Условия акции";
+            this.tabPageSale.UseVisualStyleBackColor = true;
             // 
-            // Criterion
+            // dataGridViewSale
             // 
-            this.Criterion.HeaderText = "Критерий, шт.";
-            this.Criterion.Name = "Criterion";
+            this.dataGridViewSale.AllowUserToAddRows = false;
+            this.dataGridViewSale.AllowUserToDeleteRows = false;
+            this.dataGridViewSale.AllowUserToResizeRows = false;
+            this.dataGridViewSale.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewSale.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewSale.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SalePercent});
+            this.dataGridViewSale.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.dataGridViewSale.Location = new System.Drawing.Point(3, 34);
+            this.dataGridViewSale.Name = "dataGridViewSale";
+            this.dataGridViewSale.RowHeadersVisible = false;
+            this.dataGridViewSale.Size = new System.Drawing.Size(242, 275);
+            this.dataGridViewSale.TabIndex = 1;
+            this.dataGridViewSale.TabStop = false;
             // 
-            // PercentSum
+            // menuStrip1
             // 
-            this.PercentSum.HeaderText = "Процент/Сумма за период";
-            this.PercentSum.Name = "PercentSum";
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2});
+            this.menuStrip1.Location = new System.Drawing.Point(3, 3);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1163, 28);
+            this.menuStrip1.TabIndex = 37;
+            this.menuStrip1.Text = "menuStripSale";
             // 
-            // Total
+            // toolStripMenuItem1
             // 
-            this.Total.HeaderText = "Итого по премии";
-            this.Total.Name = "Total";
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(88, 24);
+            this.toolStripMenuItem1.Text = "Добавить";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuSqleItem1_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(77, 24);
+            this.toolStripMenuItem2.Text = "Удалить";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuSqleItem2_Click);
+            // 
+            // SalePercent
+            // 
+            this.SalePercent.HeaderText = "Размер скидки, %";
+            this.SalePercent.Name = "SalePercent";
             // 
             // InputKUForm
             // 
@@ -837,6 +909,11 @@
             this.tabPageToExclude.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcluded)).EndInit();
             this.panel4.ResumeLayout(false);
+            this.tabPageSale.ResumeLayout(false);
+            this.tabPageSale.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSale)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -907,5 +984,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Criterion;
         private System.Windows.Forms.DataGridViewTextBoxColumn PercentSum;
         private System.Windows.Forms.DataGridViewTextBoxColumn Total;
+        private System.Windows.Forms.TabPage tabPageSale;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.DataGridView dataGridViewSale;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SalePercent;
     }
 }

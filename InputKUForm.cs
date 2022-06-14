@@ -62,6 +62,10 @@ namespace TradeAggregator
 
             if (_showKU)
              showSelectedKU();
+            else
+            {
+                hideTabPageServices();                
+            }
         }
 
 
@@ -81,7 +85,7 @@ namespace TradeAggregator
 
                 reader.Read();
                 
-                comboBoxPeriod.SelectedItem = reader[0].ToString();
+                comboBoxPeriod.SelectedIndex = Convert.ToInt32(reader[0]);
                 dateTimePickerDateFrom.Format = DateTimePickerFormat.Long;
                 dateTimePickerDateFrom.Value = Convert.ToDateTime(reader[1]);
                 if (reader[2].ToString() != "")
@@ -128,12 +132,15 @@ namespace TradeAggregator
                     checkBoxReturn.Enabled = false;
                     checkBoxOfactured.Enabled = false;
                     dataGridViewTerms.Enabled = false;
-                    //dataGridViewIncluded.ReadOnly = true;
-                    //dataGridViewExcluded.ReadOnly = true;
-                }
+                    dataGridViewSale.Enabled = false;
+                //dataGridViewIncluded.ReadOnly = true;
+                // dataGridViewExcluded.ReadOnly = true;
+            }
 
+                hideTabPageServices();
                 showExInProducts(_KUId);
                 showTerms(_KUId);
+                
                              
             }
 
@@ -181,11 +188,11 @@ namespace TradeAggregator
 
             command = addOrUpdate == true ? new SqlCommand(
                 $"INSERT INTO KU (VendorId, Period, DateFrom, DateTo, Status, Description, Tax, [Return], Ofactured,  Type)" +
-                $" VALUES ('{_VendorId}','{comboBoxPeriod.SelectedItem}', '{dateTimePickerDateFrom.Value.ToShortDateString()}', " +
+                $" VALUES ('{_VendorId}','{comboBoxPeriod.SelectedIndex}', '{dateTimePickerDateFrom.Value.ToShortDateString()}', " +
                 $"{date_to}, '{status}', '{richTextBoxDescription.Text}', '{checkBoxTax.Checked}', '{checkBoxReturn.Checked}', " +
                 $"'{checkBoxOfactured.Checked}', '{comboBoxKUType.SelectedItem}')", _connection)
                 : new SqlCommand( // Изменение КУ
-                $"UPDATE KU SET Period = '{comboBoxPeriod.SelectedItem}', DateFrom = '{dateTimePickerDateFrom.Value.ToShortDateString()}', " +
+                $"UPDATE KU SET Period = '{comboBoxPeriod.SelectedIndex}', DateFrom = '{dateTimePickerDateFrom.Value.ToShortDateString()}', " +
                 $"DateTo = '{dateTimePickerDateTo.Value.ToShortDateString()}', Status = '{status}', Description = '{richTextBoxDescription.Text}', " +
                 $"Tax = '{checkBoxTax.Checked}', [Return] = '{checkBoxReturn.Checked}', Ofactured = '{checkBoxOfactured.Checked}', " +
                 $"Type = '{comboBoxKUType.SelectedItem}' WHERE RecId = {_KUId}", _connection);
@@ -200,19 +207,40 @@ namespace TradeAggregator
             }
             else
             {
-                //Удаление условий бонуса в БД для последующей перезаписи
-                command = new SqlCommand($"DELETE FROM Terms WHERE KUId = '{_KUId}'", _connection);
-                command.ExecuteNonQuery();
+                if (comboBoxKUType.SelectedIndex == 0)
+                {
+                    //Удаление условий бонуса в БД для последующей перезаписи
+                    command = new SqlCommand($"DELETE FROM Terms WHERE KUId = '{_KUId}'", _connection);
+                    command.ExecuteNonQuery();
+                }
+                else
+                {
+                    //Удаление условий акции в БД для последующей перезаписи
+                    command = new SqlCommand($"DELETE FROM Sales WHERE KUId = '{_KUId}'", _connection);
+                    command.ExecuteNonQuery();
+                }
             }
-
-            //Запись условий бонуса в БД
-            for (int i = 0; i < dataGridViewTerms.RowCount; i++)
+            if (comboBoxKUType.SelectedIndex == 0)
             {
-                command = new SqlCommand(
-                    $"INSERT INTO Terms (KUId, Fixed, Criteria, [Percent/Amount], Total) VALUES ('{_KUId}', '{dataGridViewTerms.Rows[i].Cells["FixSum"].Value}'," +
-                    $" '{dataGridViewTerms.Rows[i].Cells["Criterion"].Value}', '{dataGridViewTerms.Rows[i].Cells["PercentSum"].Value}', " +
-                    $"'{dataGridViewTerms.Rows[i].Cells["Total"].Value}')", _connection);
-                command.ExecuteNonQuery();
+                //Запись условий бонуса в БД
+                for (int i = 0; i < dataGridViewTerms.RowCount; i++)
+                {
+                    command = new SqlCommand(
+                        $"INSERT INTO Terms (KUId, Fixed, Criteria, [Percent/Amount], Total) VALUES ('{_KUId}', '{dataGridViewTerms.Rows[i].Cells["FixSum"].Value}'," +
+                        $" '{dataGridViewTerms.Rows[i].Cells["Criterion"].Value}', '{dataGridViewTerms.Rows[i].Cells["PercentSum"].Value}', " +
+                        $"'{dataGridViewTerms.Rows[i].Cells["Total"].Value}')", _connection);
+                    command.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                //Запись условий акции в БД
+                for (int i = 0; i < dataGridViewSale.RowCount; i++)
+                {
+                    command = new SqlCommand(
+                        $"INSERT INTO Sales (KUId, SalePercent) VALUES ('{_KUId}', '{dataGridViewSale.Rows[i].Cells["SalePercent"].Value}')", _connection);
+                    command.ExecuteNonQuery();
+                }
             }
             // МЕТОД ДЛЯ СОХРАНЕНИЯ iN/EX
             AddInExBD();
@@ -229,6 +257,7 @@ namespace TradeAggregator
                 dateTimePickerDateFrom.Format = DateTimePickerFormat.Custom;
                 dateTimePickerDateTo.Format = DateTimePickerFormat.Custom;
                 dataGridViewTerms.Rows.Clear();
+                dataGridViewSale.Rows.Clear();
                 dataGridViewIncluded.Rows.Clear();
                 dataGridViewExcluded.Rows.Clear();
             }
@@ -256,7 +285,7 @@ namespace TradeAggregator
         // Изменение типа КУ
         private void comboBoxKUType_SelectedIndexChanged(object sender, EventArgs e)
         {
-          //  hideTabPageServices();
+            hideTabPageServices();
         }
 
         //
@@ -266,19 +295,37 @@ namespace TradeAggregator
         private void showTerms(Int64 KUId)
         {
             dataGridViewTerms.Rows.Clear();
-            SqlCommand command = new SqlCommand($"SELECT * FROM Terms WHERE KUId = {KUId}", _connection);
-
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            dataGridViewSale.Rows.Clear();
+            if (comboBoxKUType.SelectedIndex == 0)
             {
-                dataGridViewTerms.Rows.Add();
-                (dataGridViewTerms.Rows[dataGridViewTerms.RowCount - 1].Cells["FixSum"] as DataGridViewCheckBoxCell).Value = reader[2];
-                dataGridViewTerms.Rows[dataGridViewTerms.RowCount - 1].Cells["Criterion"].Value = reader[3];
-                dataGridViewTerms.Rows[dataGridViewTerms.RowCount - 1].Cells["PercentSum"].Value = reader[4];
-                dataGridViewTerms.Rows[dataGridViewTerms.RowCount - 1].Cells["Total"].Value = reader[5];
+                SqlCommand command = new SqlCommand($"SELECT * FROM Terms WHERE KUId = {KUId}", _connection);
 
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    dataGridViewTerms.Rows.Add();
+                    (dataGridViewTerms.Rows[dataGridViewTerms.RowCount - 1].Cells["FixSum"] as DataGridViewCheckBoxCell).Value = reader[2];
+                    dataGridViewTerms.Rows[dataGridViewTerms.RowCount - 1].Cells["Criterion"].Value = reader[3];
+                    dataGridViewTerms.Rows[dataGridViewTerms.RowCount - 1].Cells["PercentSum"].Value = reader[4];
+                    dataGridViewTerms.Rows[dataGridViewTerms.RowCount - 1].Cells["Total"].Value = reader[5];
+
+                }
+                reader.Close();
             }
-            reader.Close();
+            else
+            {
+                SqlCommand command = new SqlCommand($"SELECT SalePercent FROM Sales WHERE KUId = {KUId}", _connection);
+
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    dataGridViewSale.Rows.Add();
+                    dataGridViewSale.Rows[dataGridViewSale.RowCount - 1].Cells["SalePercent"].Value = reader[0];
+                }
+                reader.Close();
+            }
+            
+            
         }
 
         //
@@ -735,7 +782,7 @@ namespace TradeAggregator
             addLine("Все");
         }
 
-       /* // Открытие формы выбора категории
+        // Открытие формы выбора категории
         private void btnSelectCategory_Click(object sender, EventArgs e)
         {
             _CategoryID.Clear();
@@ -768,7 +815,7 @@ namespace TradeAggregator
             {
                 MessageBox.Show("Выберите поставщика", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }*/
+        }
         
         // Кнопка удаления строки в таблицах вкл/иск товаров
         private void button7_Click(object sender, EventArgs e) // was: 606-640, now: 606-624
@@ -809,6 +856,26 @@ namespace TradeAggregator
         }
 
         //
+        // Условия бонуса
+        //
+        // Добавление строки
+        private void toolStripMenuSqleItem1_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewSale.RowCount < 1)
+                dataGridViewSale.Rows.Add();
+            else
+                MessageBox.Show("Можно добавить только одну акцию!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        //Удаление строки
+        private void toolStripMenuSqleItem2_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewSale.RowCount > 0)
+                dataGridViewSale.Rows.RemoveAt(dataGridViewSale.CurrentRow.Index);
+            else
+                MessageBox.Show("Отсутствуют строки для удаления!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        //
         // Остальные методы
         //
         // Проверка ввода обязательных данных
@@ -830,7 +897,7 @@ namespace TradeAggregator
                 MessageBox.Show("Дата начала действия коммерческого условия не введена!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            if (dataGridViewTerms.Rows.Count == 0) // Таблица условий бонуса
+            if (comboBoxKUType.SelectedIndex == 0 && dataGridViewTerms.Rows.Count == 0) // Таблица условий бонуса
             {
                 MessageBox.Show("Условия бонуса не добавлены!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -854,6 +921,34 @@ namespace TradeAggregator
                     if (Fix == false && Sum > 100)
                     {
                         MessageBox.Show("Вы ввели слишком большой процент вознаграждения, проверьте условия!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
+            }
+
+            if (comboBoxKUType.SelectedIndex == 1 && dataGridViewSale.Rows.Count == 0) // Таблица условий бонуса
+            {
+                MessageBox.Show("Условия акции не добавлены!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else
+            {
+
+                for (int i = 0; i <= dataGridViewTerms.Rows.Count; i++)
+                {
+
+
+                    if (dataGridViewSale.Rows[i].Cells["SalePercent"].Value is null)
+                    {
+                        MessageBox.Show("Условия акции не введены!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+
+                    Int64 Sum = Convert.ToInt64(dataGridViewSale.Rows[i].Cells["SalePercent"].Value);
+                   
+                    if (Sum > 100)
+                    {
+                        MessageBox.Show("Вы ввели слишком большой процент скидки, проверьте условия!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -973,6 +1068,26 @@ namespace TradeAggregator
                 _wasChanged = true;
         }
 
+        // Скрытие/отображение вкладки "Скидка"
+        private void hideTabPageServices()
+        {
+            if (comboBoxKUType.SelectedIndex == 1)
+            {
+                tabPageSale.Parent = tabControlMain;
+                tabPageBonus.Parent = null;
+            }
+            //else
+            if (comboBoxKUType.SelectedIndex == 0)
+            {
+                tabPageBonus.Parent = tabControlMain;
+                tabPageSale.Parent = null;
+            }
+            if (comboBoxKUType.SelectedIndex == -1)
+            {
+                tabPageBonus.Parent = null;
+                tabPageSale.Parent = null;
+            }
+        }
         // Закрытие формы
         private void InputKUForm_FormClosing(object sender, FormClosingEventArgs e)
         {

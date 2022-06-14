@@ -143,6 +143,14 @@ namespace TradeAggregator
             Contracts.ShowDialog();
         }
 
+        //Открытие формы фин. графиков
+        private void buttonGraph_Click(object sender, EventArgs e)
+        {
+            _buttonFlag = 5;
+            Form Graph = new GraphForm(_userID, _typeIndex);
+            Graph.ShowDialog();
+
+        }
 
         // Закрытие формы
         private void AccountForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -150,6 +158,6 @@ namespace TradeAggregator
             _connection.Close();
         }
 
-        
+       
     }
 }
