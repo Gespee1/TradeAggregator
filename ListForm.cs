@@ -136,7 +136,11 @@ namespace TradeAggregator
                             labelHeader.Text = "Заключенные договоры";
 
                             command = new SqlCommand($"SELECT  Contracts.RecId As 'Код договора',  Contracts.CommercialOfferId As 'Код коммерческого предложения', " +
-                                $" Contracts.Date As 'Дата' FROM  CommercialOffers, Contracts WHERE Contracts.CommercialOfferId = CommercialOffers.RecId AND VendorId = '{_userId}'", _connection);
+                                $" Contracts.Date As 'Дата', " +
+                                $" case when Contracts.Status = 0 then 'Создан' " +
+                                $"when Contracts.Status = 1 then 'Действует' " +
+                                $"when Contracts.Status = 2 then 'Закрыт' end AS 'Статус'" +
+                                $" FROM  CommercialOffers, Contracts WHERE Contracts.CommercialOfferId = CommercialOffers.RecId AND VendorId = '{_userId}'", _connection);
 
                             dt = new DataTable();
                             adapt = new SqlDataAdapter(command);
