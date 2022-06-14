@@ -34,7 +34,7 @@ namespace TradeAggregator
         }
 
         // Загрузка формы
-        private void Form1_Load(object sender, EventArgs e)
+        private void GraphForm_Load(object sender, EventArgs e)
         {
             _connection.Open();
 
@@ -54,11 +54,13 @@ namespace TradeAggregator
         //Загрузка графика из БД
         private void ShowGraph()
         {
-            DataTable graphs = new DataTable();
+            //График бонуса
+            DataTable graphs = new DataTable();                        
             List<int> RowIndexes = new List<int>();
             SqlCommand command = new SqlCommand($"SELECT * FROM KU_graph where VendorId = {_userId}  ", _connection);
             SqlDataAdapter adapt = new SqlDataAdapter(command);
             adapt.Fill(graphs);
+                      
 
             // Запись выделенных строк
             if (dataGridViewGraph.RowCount > 0)
@@ -94,15 +96,61 @@ namespace TradeAggregator
                 for (int i = 0; i < RowIndexes.Count; i++)
                     dataGridViewGraph.Rows[RowIndexes[i]].Cells[0].Selected = true;
             }
+
+            //График договоров
+            DataTable graphs2 = new DataTable();
+           
+            SqlCommand command2 = new SqlCommand($"Select Contracts.RecId AS 'Номер договора', Contracts.Date AS 'Дата договора', Profiles.Name AS 'Торговая сеть'," +
+                $" SUM(CommercialOfferLines.Qty) * SUM(Assortment.Price) As 'Сумма к оплате, руб.'," +
+                $" case when Contracts.Status = 0 then 'Создан' " +
+                $"when Contracts.Status = 1 then 'Действует' " +
+                $"when Contracts.Status = 2 then 'Закрыт' end AS 'Статус' From Contracts" +
+                $" left join CommercialOffers on Contracts.CommercialOfferId = CommercialOffers.RecId " +
+                $"left join CommercialOfferLines on Contracts.CommercialOfferId = CommercialOfferLines.CommercialOfferId " +
+                $"Left join Profiles on Profiles.RecID = CommercialOffers.NetworkId " +
+                $"left join Assortment on Assortment.ProductID = CommercialOfferLines.ProductId" +
+                $" Where CommercialOffers.VendorId = {_userId} Group by Contracts.RecId, Contracts.Date, Profiles.Name, Contracts.Status Order by Contracts.Date ", _connection);
+            SqlDataAdapter adapt2 = new SqlDataAdapter(command2);
+            adapt2.Fill(graphs2);
+            dataGridViewGraphDocs.DataSource = graphs2;
+
         }
 
-             
+
+        //Изменение видимости элементов формы в зависимости от нажатой вкладки
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 0)
+            {
+                buttonApprove.Visible = true;
+                buttonCalcAll.Visible = true;
+                buttonCalcBonus.Visible = true;
+                buttonCancelCalc.Visible = true;
+                dateTimePickerFrom.Visible = true;
+                dateTimePickerTo.Visible = true;
+                labelFrom.Visible = true;
+                labelTo.Visible = true;
+            }
+            else
+            {
+
+                buttonApprove.Visible = false;
+                buttonCalcAll.Visible = false;
+                buttonCalcBonus.Visible = false;
+                buttonCancelCalc.Visible = false;
+                dateTimePickerFrom.Visible = false;
+                dateTimePickerTo.Visible = false;
+                labelFrom.Visible = false;
+                labelTo.Visible = false;
+            }
+        }
 
         // Изменение размеров формы
         private void KUGraphForm_Resize(object sender, EventArgs e)
         {
             doResize();
         }
+
 
         // Изменение размеров панели с гридой
         private void doResize()

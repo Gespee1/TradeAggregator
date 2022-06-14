@@ -78,9 +78,16 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.labelProgress = new System.Windows.Forms.Label();
             this.progressBarForAsincBonus = new System.Windows.Forms.ProgressBar();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.GraphRetro = new System.Windows.Forms.TabPage();
+            this.GraphDocs = new System.Windows.Forms.TabPage();
+            this.dataGridViewGraphDocs = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGraph)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.GraphRetro.SuspendLayout();
+            this.GraphDocs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGraphDocs)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -122,24 +129,23 @@
             // вВордToolStripMenuItem
             // 
             this.вВордToolStripMenuItem.Name = "вВордToolStripMenuItem";
-            this.вВордToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.вВордToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
             this.вВордToolStripMenuItem.Text = "АКТ-счет";
             // 
             // вЭксельToolStripMenuItem
             // 
             this.вЭксельToolStripMenuItem.Name = "вЭксельToolStripMenuItem";
-            this.вЭксельToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.вЭксельToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
             this.вЭксельToolStripMenuItem.Text = "Отчет-сверка 1";
             // 
             // excel2ToolStripMenuItem
             // 
             this.excel2ToolStripMenuItem.Name = "excel2ToolStripMenuItem";
-            this.excel2ToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.excel2ToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
             this.excel2ToolStripMenuItem.Text = "Отчет-сверка 2";
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.dataGridViewGraph);
             this.panel1.Location = new System.Drawing.Point(0, 42);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1203, 479);
@@ -166,10 +172,10 @@
             this.GraphSumN,
             this.Turnover,
             this.Graph_Id});
-            this.dataGridViewGraph.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewGraph.Location = new System.Drawing.Point(-45, 0);
             this.dataGridViewGraph.Name = "dataGridViewGraph";
             this.dataGridViewGraph.ReadOnly = true;
-            this.dataGridViewGraph.Size = new System.Drawing.Size(1200, 473);
+            this.dataGridViewGraph.Size = new System.Drawing.Size(1231, 451);
             this.dataGridViewGraph.TabIndex = 0;
             // 
             // KU_id
@@ -451,11 +457,56 @@
             this.progressBarForAsincBonus.TabIndex = 69;
             this.progressBarForAsincBonus.Visible = false;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.GraphRetro);
+            this.tabControl1.Controls.Add(this.GraphDocs);
+            this.tabControl1.Location = new System.Drawing.Point(3, 42);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1200, 473);
+            this.tabControl1.TabIndex = 1;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+           
+            // GraphRetro
+            // 
+            this.GraphRetro.Controls.Add(this.dataGridViewGraph);
+            this.GraphRetro.Location = new System.Drawing.Point(4, 22);
+            this.GraphRetro.Name = "GraphRetro";
+            this.GraphRetro.Padding = new System.Windows.Forms.Padding(3);
+            this.GraphRetro.Size = new System.Drawing.Size(1192, 447);
+            this.GraphRetro.TabIndex = 0;
+            this.GraphRetro.Text = "График выплат премий";
+            this.GraphRetro.UseVisualStyleBackColor = true;
+            // 
+            // GraphDocs
+            // 
+            this.GraphDocs.Controls.Add(this.dataGridViewGraphDocs);
+            this.GraphDocs.Location = new System.Drawing.Point(4, 22);
+            this.GraphDocs.Name = "GraphDocs";
+            this.GraphDocs.Padding = new System.Windows.Forms.Padding(3);
+            this.GraphDocs.Size = new System.Drawing.Size(1192, 447);
+            this.GraphDocs.TabIndex = 1;
+            this.GraphDocs.Text = "График договоров";
+            this.GraphDocs.UseVisualStyleBackColor = true;
+            // 
+            // dataGridViewGraphDocs
+            // 
+            this.dataGridViewGraphDocs.AllowUserToAddRows = false;
+            this.dataGridViewGraphDocs.AllowUserToDeleteRows = false;
+            this.dataGridViewGraphDocs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewGraphDocs.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewGraphDocs.Name = "dataGridViewGraphDocs";
+            this.dataGridViewGraphDocs.ReadOnly = true;
+            this.dataGridViewGraphDocs.Size = new System.Drawing.Size(1192, 451);
+            this.dataGridViewGraphDocs.TabIndex = 0;
+            // 
             // GraphForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1215, 656);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.progressBarForAsincBonus);
             this.Controls.Add(this.labelProgress);
             this.Controls.Add(this.buttonCancelCalc);
@@ -470,10 +521,15 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "GraphForm";
             this.Text = "GraphForm";
+            this.Load += new System.EventHandler(this.GraphForm_Load);
+            this.Resize += new System.EventHandler(this.KUGraphForm_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGraph)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.GraphRetro.ResumeLayout(false);
+            this.GraphDocs.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGraphDocs)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -531,5 +587,9 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label labelProgress;
         private System.Windows.Forms.ProgressBar progressBarForAsincBonus;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage GraphRetro;
+        private System.Windows.Forms.TabPage GraphDocs;
+        private System.Windows.Forms.DataGridView dataGridViewGraphDocs;
     }
 }
