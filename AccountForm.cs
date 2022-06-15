@@ -135,10 +135,18 @@ namespace TradeAggregator
             receivedComOffers.ShowDialog();
         }
 
-        //Открытие формы списка Договоров
+        //Открытие формы списка Договоров поставщик
         private void buttonCont_Click(object sender, EventArgs e)
         {
             _buttonFlag = 4;
+            Form Contracts = new ListForm(_userID, _typeIndex, _buttonFlag);
+            Contracts.ShowDialog();
+        }
+
+        //Открытие формы списка Договоров тс
+        private void buttonContracts_Click(object sender, EventArgs e)
+        {
+            _buttonFlag = 2;
             Form Contracts = new ListForm(_userID, _typeIndex, _buttonFlag);
             Contracts.ShowDialog();
         }
@@ -158,6 +166,6 @@ namespace TradeAggregator
             _connection.Close();
         }
 
-       
+        
     }
 }
