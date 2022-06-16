@@ -140,7 +140,7 @@ namespace TradeAggregator
                                 $" case when Contracts.Status = 0 then 'Создан' " +
                                 $"when Contracts.Status = 1 then 'Действует' " +
                                 $"when Contracts.Status = 2 then 'Закрыт' end AS 'Статус'" +
-                                $" FROM  CommercialOffers, Contracts WHERE Contracts.CommercialOfferId = CommercialOffers.RecId AND VendorId = '{_userId}'", _connection);
+                                $" FROM  CommercialOffers, CommercialOfferVendors, Contracts WHERE Contracts.CommercialOfferId = CommercialOffers.RecId AND VendorId = '{_userId}'", _connection);
 
                             dt = new DataTable();
                             adapt = new SqlDataAdapter(command);
@@ -241,6 +241,24 @@ namespace TradeAggregator
                             dataGridView1.ReadOnly = true;
                             for (int i = 0; i < dataGridView1.ColumnCount; i++)
                                 dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                            break;
+
+                        //Договоры
+                        case 2:
+                            this.Text = "Заключенные договоры";
+                            labelHeader.Text = "Заключенные договоры";
+
+                            command = new SqlCommand($"SELECT  Contracts.RecId As 'Код договора',  Contracts.CommercialOfferId As 'Код коммерческого предложения', " +
+                                $" Contracts.Date As 'Дата', " +
+                                $" case when Contracts.Status = 0 then 'Создан' " +
+                                $"when Contracts.Status = 1 then 'Действует' " +
+                                $"when Contracts.Status = 2 then 'Закрыт' end AS 'Статус'" +
+                                $" FROM  CommercialOffers, CommercialOfferVendors, Contracts WHERE Contracts.CommercialOfferId = CommercialOffers.RecId AND NetworkId = '{_userId}'", _connection);
+
+                            dt = new DataTable();
+                            adapt = new SqlDataAdapter(command);
+                            adapt.Fill(dt);
+                            dataGridView1.DataSource = dt;
                             break;
                     }
                     break;
