@@ -130,9 +130,11 @@ namespace TradeAggregator
         //Открытие формы полученных КП
         private void buttonReceivedKP_Click(object sender, EventArgs e)
         {
-            _buttonFlag = 2;
-            Form receivedComOffers = new ListForm(_userID, _typeIndex, _buttonFlag);
-            receivedComOffers.ShowDialog();
+            //_buttonFlag = 2;
+            //Form receivedComOffers = new ListForm(_userID, _typeIndex, _buttonFlag);
+            //receivedComOffers.ShowDialog();
+            Form commOffers = new CommOffersForm(_userID, _typeIndex);
+            commOffers.ShowDialog();
         }
 
         //Открытие формы списка Договоров

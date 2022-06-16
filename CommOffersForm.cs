@@ -16,6 +16,7 @@ namespace TradeAggregator
     {
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
         private Int64 _userID, _extraID;
+        private string _extraStatus;
         private bool _typeIdx, _listMode;
 
         public CommOffersForm()
@@ -44,32 +45,63 @@ namespace TradeAggregator
             if (_listMode) // Форма списка
             {
                 buttonReturn.Visible = false;
+                buttonApply.Visible = false;
+                buttonDeny.Visible = false;
                 splitContainer1.Panel2MinSize = 0;
                 splitContainer1.SplitterDistance = splitContainer1.Size.Width;
                 splitContainer1.IsSplitterFixed = true;
+                toolStripMenuItem1.Visible = true;
+                labelDeny.Visible = false;
+                richTextBoxDeny.Visible = false;
             }
             else
             {
                 buttonReturn.Visible = true;
+                buttonApply.Visible = true;
                 splitContainer1.IsSplitterFixed = false;
                 splitContainer1.SplitterDistance = Convert.ToInt32(splitContainer1.Size.Width / 2);
                 splitContainer1.Panel2MinSize = 25;
+                toolStripMenuItem1.Visible = false;
             }
 
-            if (!_typeIdx) // Поставщик
-            {
-                if(_listMode) // Форма списка
-                {
 
-                }
-                else
-                {
-
-                }
-            }
-            else // Торговая компания
+            if (_listMode) // Форма списка
             {
-                if (_listMode) // Форма списка
+                if (!_typeIdx) // Поставщик
+                {
+                    dataGridViewVendors.ReadOnly = true;
+
+                    SqlCommand command = new SqlCommand($"select co.RecId as 'Номер КП', " +
+                        $"co.OrderId as 'Номер заказа', co.Date as 'Дата', net.UrasticName as 'Сеть', " +
+                        $"case when co.Status = 0 then 'Создано' " +
+                        $"when co.Status = 1 then 'Утверджено ТК' " +
+                        $"when co.Status = 2 then 'Утверджено' " +
+                        $"when co.Status = -1 then 'Отклонено поставщиком' " +
+                        $"end as 'Статус', co.VendorReadFlag " +
+                        $"from CommercialOfferVendors cov " +
+                        $"join CommercialOffers co on cov.CommercialOfferId = co.RecId " +
+                        $"left join Users u on u.RecID = co.NetworkId " +
+                        $"left join Users uVend on uVend.RecID = {_userID} " +
+                        $"left join Profiles net on net.RecID = u.ProfileId " +
+                        $"left join Profiles vend on vend.RecID = uVend.ProfileId " +
+                        $"where cov.Selected = 1 and cov.VendorId = vend.RecID", _connection);
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dt);
+
+                    dataGridViewVendors.Columns.Clear();
+                    dataGridViewVendors.DataSource = dt;
+                    dataGridViewVendors.Columns["VendorReadFlag"].Visible = false;
+
+                    for (int i = 0; i < dataGridViewVendors.ColumnCount; i++)
+                        dataGridViewVendors.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+                    for (int i = 0; i < dataGridViewVendors.RowCount; i++)
+                    {
+                        if (Convert.ToBoolean(dataGridViewVendors.Rows[i].Cells["VendorReadFlag"].Value) == false)
+                            dataGridViewVendors.Rows[i].DefaultCellStyle.Font = new Font(dataGridViewVendors.Font, FontStyle.Bold);
+                    }
+                }
+                else // Торговая компания
                 {
                     generateComOffs();
 
@@ -99,56 +131,128 @@ namespace TradeAggregator
                             dataGridViewVendors.Rows[i].DefaultCellStyle.Font = new Font(dataGridViewVendors.Font, FontStyle.Bold);
                     }
                 }
-                else // Документная форма
+            }
+            else // Документная форма
+            {
+                SqlCommand command;
+                SqlDataReader reader;
+
+                if (!_typeIdx) // Поставщик
                 {
-                    SqlCommand command = new SqlCommand($"select cov.RecId, p.Name, cov.Selected " +
+                    dataGridViewProducts.ReadOnly = true;
+                    buttonDeny.Visible = true;
+                }
+
+                checkStatus();
+                
+
+                command = new SqlCommand($"select cov.RecId, p.Name, cov.Selected " +
                         $"from CommercialOfferVendors cov " +
                         $"left join Profiles p on p.RecID = cov.VendorId " +
                         $"where cov.CommercialOfferId = {_extraID}", _connection);
-                    dataGridViewVendors.DataSource = null;
-                    dataGridViewVendors.Columns.Clear();
-                    dataGridViewVendors.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VendCode", HeaderText = "Код поставщика" });
-                    dataGridViewVendors.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VendName", HeaderText = "Поставщик" });
-                    dataGridViewVendors.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Select", HeaderText = "Выбор" });
-                    SqlDataReader reader = command.ExecuteReader();
-                    while(reader.Read())
-                    {
-                        dataGridViewVendors.Rows.Add();
-                        dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[0].Value = reader[0].ToString();
-                        dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[1].Value = reader[1].ToString();
-                        dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[2].Value = Convert.ToBoolean(reader[2]);
-                    }
-                    reader.Close();
-
-                    command = new SqlCommand($"select col.ProductId, p.Name, col.Qty, a.Price, col.Selected " +
-                        $"from CommercialOfferLines col " +
-                        $"left join Products p on p.ProductID = col.ProductId " +
-                        $"left join CommercialOfferVendors cov on cov.RecId = col.ComOffVendorId " +
-                        $"left join Assortment a on a.VendorID = cov.VendorId and a.ProductID = col.ProductId " +
-                        $"where col.CommercialOfferId = {_extraID} and col.ComOffVendorId = {dataGridViewVendors.Rows[0].Cells[0].Value}", _connection);
-                    dataGridViewProducts.DataSource = null;
-                    dataGridViewProducts.Columns.Clear();
-                    dataGridViewProducts.Columns.Add(new DataGridViewTextBoxColumn() { Name = "ProductCode", HeaderText = "Код продукта" });
-                    dataGridViewProducts.Columns.Add(new DataGridViewTextBoxColumn() { Name = "ProductName", HeaderText = "Продукт" });
-                    dataGridViewProducts.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Qty", HeaderText = "Количество" });
-                    dataGridViewProducts.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Price", HeaderText = "Стоимость" });
-                    dataGridViewProducts.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Select", HeaderText = "Выбор" });
-                    reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        dataGridViewProducts.Rows.Add();
-                        dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[0].Value = reader[0].ToString();
-                        dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[1].Value = reader[1].ToString();
-                        dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[2].Value = reader[2].ToString();
-                        dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[3].Value = reader[3].ToString();
-                        dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[4].Value = Convert.ToBoolean(reader[4]);
-                    }
-                    reader.Close();
-
+                dataGridViewVendors.DataSource = null;
+                dataGridViewVendors.Columns.Clear();
+                dataGridViewVendors.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VendCode", HeaderText = "Код поставщика" });
+                dataGridViewVendors.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VendName", HeaderText = "Поставщик" });
+                dataGridViewVendors.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Select", HeaderText = "Выбор" });
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    dataGridViewVendors.Rows.Add();
+                    dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[0].Value = reader[0].ToString();
+                    dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[1].Value = reader[1].ToString();
+                    dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[2].Value = Convert.ToBoolean(reader[2]);
                 }
+                reader.Close();
+
+                command = new SqlCommand($"select col.ProductId, p.Name, col.Qty, a.Price, col.Selected " +
+                    $"from CommercialOfferLines col " +
+                    $"left join Products p on p.ProductID = col.ProductId " +
+                    $"left join CommercialOfferVendors cov on cov.RecId = col.ComOffVendorId " +
+                    $"left join Assortment a on a.VendorID = cov.VendorId and a.ProductID = col.ProductId " +
+                    $"where col.CommercialOfferId = {_extraID} and col.ComOffVendorId = {dataGridViewVendors.Rows[0].Cells[0].Value}", _connection);
+                dataGridViewProducts.DataSource = null;
+                dataGridViewProducts.Columns.Clear();
+                dataGridViewProducts.Columns.Add(new DataGridViewTextBoxColumn() { Name = "ProductCode", HeaderText = "Код продукта" });
+                dataGridViewProducts.Columns.Add(new DataGridViewTextBoxColumn() { Name = "ProductName", HeaderText = "Продукт" });
+                dataGridViewProducts.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Qty", HeaderText = "Количество" });
+                dataGridViewProducts.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Price", HeaderText = "Стоимость" });
+                dataGridViewProducts.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Select", HeaderText = "Выбор" });
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    dataGridViewProducts.Rows.Add();
+                    dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[0].Value = reader[0].ToString();
+                    dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[1].Value = reader[1].ToString();
+                    dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[2].Value = reader[2].ToString();
+                    dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[3].Value = reader[3].ToString();
+                    dataGridViewProducts.Rows[dataGridViewProducts.RowCount - 1].Cells[4].Value = Convert.ToBoolean(reader[4]);
+                }
+                reader.Close();
+
+                // Запрет сортировки
+                for (int i = 0; i < dataGridViewVendors.ColumnCount; i++)
+                    dataGridViewVendors.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                for (int i = 0; i < dataGridViewProducts.ColumnCount; i++)
+                    dataGridViewProducts.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+
+
             }
 
         }
+
+        // Настройка документной формы в зависимости от статуса
+        private void checkStatus()
+        {
+            SqlCommand command;
+
+            if (!_typeIdx) // Поставщик
+            {
+                switch(_extraStatus)
+                {
+                    case "Утверджено":
+                        buttonApply.Enabled = false;
+                        break;
+                    case "Отклонено поставщиком":
+                        buttonDeny.Enabled = false;
+                        labelDeny.Visible = true;
+                        richTextBoxDeny.Visible = true;
+                        command = new SqlCommand($"select DenyComment from CommercialOffers where RecId = {_extraID}", _connection);
+                        richTextBoxDeny.Text = command.ExecuteScalar().ToString();
+                        break;
+                }
+            }
+            else // Торговая компания
+            {
+                switch (_extraStatus)
+                {
+                    case "Утверджено ТК":
+                        buttonApply.Enabled = false;
+                        break;
+                    case "Утверджено":
+                        buttonApply.Enabled = false;
+                        break;
+                    case "Отклонено поставщиком":
+                        labelDeny.Visible = true;
+                        richTextBoxDeny.Visible = true;
+                        command = new SqlCommand($"select DenyComment from CommercialOffers where RecId = {_extraID}", _connection);
+                        richTextBoxDeny.Text = command.ExecuteScalar().ToString();
+                        break;
+                }
+            }
+
+
+            if (_extraStatus == "Отклонено поставщиком")
+            {
+                labelDeny.Visible = true;
+                richTextBoxDeny.Visible = true;
+                command = new SqlCommand($"select DenyComment from CommercialOffers where RecId = {_extraID}", _connection);
+                richTextBoxDeny.Text = command.ExecuteScalar().ToString();
+            }
+
+        }
+
 
         // Одиночный клик по гриде поставщиков
         private void dataGridViewVendors_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -193,20 +297,26 @@ namespace TradeAggregator
         {
             SqlCommand command;
 
+            _listMode = false;
+            _extraID = Convert.ToInt64(dataGridViewVendors.Rows[dataGridViewVendors.CurrentRow.Index].Cells["Номер КП"].Value);
+            _extraStatus = dataGridViewVendors.Rows[dataGridViewVendors.CurrentRow.Index].Cells["Статус"].Value.ToString();
+
             if (!_typeIdx) // Поставщик
             {
                 if (_listMode) // Форма списка
                 {
-
+                    // Выставление флага прочитанности
+                    if (Convert.ToBoolean(dataGridViewVendors.Rows[dataGridViewVendors.CurrentRow.Index].Cells["VendorReadFlag"].Value) == false)
+                    {
+                        command = new SqlCommand($"update CommercialOffers set VendorReadFlag = 1 where RecId = {_extraID}", _connection);
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
             else // Торговая компания
             {
                 if (_listMode) // Форма списка
                 {
-                    _listMode = false;
-                    _extraID = Convert.ToInt64(dataGridViewVendors.Rows[dataGridViewVendors.CurrentRow.Index].Cells["Номер КП"].Value);
-
                     // Выставление флага прочитанности
                     if(Convert.ToBoolean(dataGridViewVendors.Rows[dataGridViewVendors.CurrentRow.Index].Cells["NetworkReadFlag"].Value) == false)
                     {
@@ -214,9 +324,9 @@ namespace TradeAggregator
                         command.ExecuteNonQuery();
                     }
 
-                    loadData();
                 }
             }
+            loadData();
         }
 
         
@@ -275,14 +385,72 @@ namespace TradeAggregator
             
         }
 
+        
         // Возврат к списку КП
         private void buttonReturn_Click(object sender, EventArgs e)
         {
             _listMode = true;
             loadData();
         }
+        // Кнопка утверждения КП
+        private void buttonApply_Click(object sender, EventArgs e)
+        {
+            DialogResult dialog;
+            SqlCommand command;
 
+            dialog = MessageBox.Show("Вы уверены, что хотите утвердить коммерческое предложение?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(dialog == DialogResult.Yes)
+            {
+                if(!_typeIdx) // Поставщик
+                {
+                    command = new SqlCommand($"update CommercialOffers set Status = 2 where RecId = {_extraID}", _connection);
+                    command.ExecuteNonQuery();
+                }
+                else // Торг. сеть
+                {
+                    for(int i = 0; i < dataGridViewVendors.RowCount; i++)
+                    {
+                        if(Convert.ToBoolean(dataGridViewVendors.Rows[i].Cells["Select"].Value) == true)
+                        {
+                            command = new SqlCommand($"update CommercialOfferVendors set Selected = 1 where CommercialOfferId = {_extraID} and " +
+                                $"VendorId = {dataGridViewVendors.Rows[i].Cells["VendCode"].Value}", _connection);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    command = new SqlCommand($"update CommercialOffers set Status = 1 where RecId = {_extraID}", _connection);
+                    command.ExecuteNonQuery();
+                }
+                _listMode = true;
+                loadData();
+            }
+        }
+        // Кнопка отказа утверджения для поставщика
+        private void buttonDeny_Click(object sender, EventArgs e)
+        {
+            SqlCommand command;
 
+            if(!_typeIdx) // Поставщик
+            {
+                if(richTextBoxDeny.Visible == false)
+                {
+                    richTextBoxDeny.Visible = true;
+                    labelDeny.Visible = true;
+                    richTextBoxDeny.ReadOnly = false;
+                }
+                else
+                {
+                    command = new SqlCommand($"update CommercialOffers set Status = -1, DenyComment = '{richTextBoxDeny.Text}' where " +
+                        $"RecId = {_extraID}", _connection);
+                    command.ExecuteNonQuery();
+
+                    richTextBoxDeny.Text = "";
+                    richTextBoxDeny.Visible = false;
+                    labelDeny.Visible = false;
+                    _listMode = true;
+                    loadData();
+                }
+            }
+        }
 
         private void CommOffers_FormClosing(object sender, FormClosingEventArgs e)
         {
