@@ -902,7 +902,7 @@ namespace TradeAggregator
                 MessageBox.Show("Условия бонуса не добавлены!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            else
+            if (comboBoxKUType.SelectedIndex == 0 && dataGridViewTerms.Rows.Count != 0) // Таблица условий бонуса
             {
 
                 for (int i = 0; i < dataGridViewTerms.Rows.Count; i++)
@@ -931,7 +931,7 @@ namespace TradeAggregator
                 MessageBox.Show("Условия акции не добавлены!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            else
+            if (comboBoxKUType.SelectedIndex == 1 && dataGridViewSale.Rows.Count != 0) // Таблица условий бонуса
             {
 
                 for (int i = 0; i <= dataGridViewTerms.Rows.Count; i++)

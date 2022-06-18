@@ -18,7 +18,7 @@ namespace TradeAggregator
         private Int64 VendorId;
         private List<Int64> ProdId;
         private SqlConnection _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["AggregatorDataBase"].ConnectionString);
-
+        bool add = false;
         public SelectProductForm()
         {
             InitializeComponent();
@@ -59,31 +59,22 @@ namespace TradeAggregator
             adapt.Fill(dt);
             advancedDataGridViewProducts.DataSource = dt;
             for (int i = 0; i < advancedDataGridViewProducts.ColumnCount; i++)
+            {
                 advancedDataGridViewProducts.Columns[i].ReadOnly = true;
-
-            advancedDataGridViewProducts.Columns.AddRange(new DataGridViewCheckBoxColumn());
-            advancedDataGridViewProducts.Columns[advancedDataGridViewProducts.ColumnCount - 1].HeaderText = "Выбрать";
-            advancedDataGridViewProducts.Columns[advancedDataGridViewProducts.ColumnCount - 1].Name = "checkBoxes";
-
-            EDGV.EDGVColumnHeaderCell headCell = advancedDataGridViewProducts.Columns[advancedDataGridViewProducts.ColumnCount - 1].HeaderCell as EDGV.EDGVColumnHeaderCell;
-            headCell.FilterEnabled = false;
-
+            }
+            if (add == false)
+            {
+                advancedDataGridViewProducts.Columns.AddRange(new DataGridViewCheckBoxColumn());
+                advancedDataGridViewProducts.Columns[advancedDataGridViewProducts.ColumnCount - 1].HeaderText = "Выбрать";
+                advancedDataGridViewProducts.Columns[advancedDataGridViewProducts.ColumnCount - 1].Name = "checkBoxes";
+                add = true;
+            }
+           
             showRowCount();
             doResize();
         }
 
-        // Фильтрация товаров
-        private void advancedDataGridView1_FilterStringChanged(object sender, EventArgs e)
-        {
-            (advancedDataGridViewProducts.DataSource as DataTable).DefaultView.RowFilter = advancedDataGridViewProducts.FilterString;
-            showRowCount();
-        }
-
-        // Сортировка товаров
-        private void advancedDataGridView1_SortStringChanged(object sender, EventArgs e)
-        {
-
-        }
+        
 
         // Показать общее кол-во отображенных строк
         private void showRowCount()
@@ -99,7 +90,7 @@ namespace TradeAggregator
             {
                 if (Convert.ToBoolean(advancedDataGridViewProducts.Rows[i].Cells["checkBoxes"].Value) == true)
                 {
-                    SqlCommand command = new SqlCommand($"SELECT Product_id FROM Products WHERE Name = '{advancedDataGridViewProducts.Rows[i].Cells["Name"].Value}'", _connection);
+                    SqlCommand command = new SqlCommand($"SELECT ProductID FROM Products WHERE Name = '{advancedDataGridViewProducts.Rows[i].Cells["Наименование"].Value}'", _connection);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
                     ProdId.Add(Convert.ToInt64(reader[0]));

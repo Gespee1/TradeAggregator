@@ -146,31 +146,32 @@ namespace TradeAggregator
                 checkStatus();
                 
 
-                command = new SqlCommand($"select cov.RecId, p.Name, cov.Selected " +
-                        $"from CommercialOfferVendors cov " +
-                        $"left join Profiles p on p.RecID = cov.VendorId " +
-                        $"where cov.CommercialOfferId = {_extraID}", _connection);
+                command = new SqlCommand($"select co.NetworkId, p.Name from CommercialOffers co " +
+                        $"left join Users u on u.RecID = co.NetworkId " +
+                        $"left join Profiles p on p.RecID = u.ProfileId " +
+                        $"left join CommercialOfferVendors on CommercialOfferVendors.CommercialOfferId = co.RecId " +
+                        $"where co.RecId = {_extraID} ", _connection);
                 dataGridViewVendors.DataSource = null;
                 dataGridViewVendors.Columns.Clear();
-                dataGridViewVendors.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VendCode", HeaderText = "Код поставщика" });
-                dataGridViewVendors.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VendName", HeaderText = "Поставщик" });
-                dataGridViewVendors.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Select", HeaderText = "Выбор" });
+                dataGridViewVendors.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VendCode", HeaderText = "Код торговой компании" });
+                dataGridViewVendors.Columns.Add(new DataGridViewTextBoxColumn() { Name = "VendName", HeaderText = "Наименование торговой компании" });
+                //dataGridViewVendors.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Select", HeaderText = "Выбор" });
                 reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     dataGridViewVendors.Rows.Add();
                     dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[0].Value = reader[0].ToString();
                     dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[1].Value = reader[1].ToString();
-                    dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[2].Value = Convert.ToBoolean(reader[2]);
+                   // dataGridViewVendors.Rows[dataGridViewVendors.RowCount - 1].Cells[2].Value = Convert.ToBoolean(reader[2]);
                 }
                 reader.Close();
-
+               // dataGridViewVendors.Visible = false;
                 command = new SqlCommand($"select col.ProductId, p.Name, col.Qty, a.Price, col.Selected " +
                     $"from CommercialOfferLines col " +
                     $"left join Products p on p.ProductID = col.ProductId " +
                     $"left join CommercialOfferVendors cov on cov.RecId = col.ComOffVendorId " +
                     $"left join Assortment a on a.VendorID = cov.VendorId and a.ProductID = col.ProductId " +
-                    $"where col.CommercialOfferId = {_extraID} and col.ComOffVendorId = {dataGridViewVendors.Rows[0].Cells[0].Value}", _connection);
+                    $"where col.CommercialOfferId = {_extraID} and col.ComOffVendorId = 2", _connection);
                 dataGridViewProducts.DataSource = null;
                 dataGridViewProducts.Columns.Clear();
                 dataGridViewProducts.Columns.Add(new DataGridViewTextBoxColumn() { Name = "ProductCode", HeaderText = "Код продукта" });

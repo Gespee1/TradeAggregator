@@ -31,10 +31,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.labelMain = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.advancedDataGridViewProducts = new EDGV.ExtendedDataGridView();
             this.labelShownProducts = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonAddSelected = new System.Windows.Forms.Button();
+            this.advancedDataGridViewProducts = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.advancedDataGridViewProducts)).BeginInit();
@@ -69,26 +69,6 @@
             this.panel2.Padding = new System.Windows.Forms.Padding(12, 0, 12, 12);
             this.panel2.Size = new System.Drawing.Size(886, 439);
             this.panel2.TabIndex = 10;
-            // 
-            // advancedDataGridViewProducts
-            // 
-            this.advancedDataGridViewProducts.AllowUserToAddRows = false;
-            this.advancedDataGridViewProducts.AllowUserToDeleteRows = false;
-            this.advancedDataGridViewProducts.AllowUserToResizeRows = false;
-            this.advancedDataGridViewProducts.AutoGenerateContextFilters = true;
-            this.advancedDataGridViewProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.advancedDataGridViewProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.advancedDataGridViewProducts.DateWithTime = false;
-            this.advancedDataGridViewProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.advancedDataGridViewProducts.Location = new System.Drawing.Point(12, 0);
-            this.advancedDataGridViewProducts.MultiSelect = false;
-            this.advancedDataGridViewProducts.Name = "advancedDataGridViewProducts";
-            this.advancedDataGridViewProducts.RowHeadersVisible = false;
-            this.advancedDataGridViewProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.advancedDataGridViewProducts.Size = new System.Drawing.Size(862, 427);
-            this.advancedDataGridViewProducts.TabIndex = 5;
-            this.advancedDataGridViewProducts.TabStop = false;
-            this.advancedDataGridViewProducts.TimeFilter = false;
             // 
             // labelShownProducts
             // 
@@ -125,6 +105,14 @@
             this.buttonAddSelected.UseVisualStyleBackColor = true;
             this.buttonAddSelected.Click += new System.EventHandler(this.button1_Click);
             // 
+            // advancedDataGridViewProducts
+            // 
+            this.advancedDataGridViewProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.advancedDataGridViewProducts.Location = new System.Drawing.Point(0, 0);
+            this.advancedDataGridViewProducts.Name = "advancedDataGridViewProducts";
+            this.advancedDataGridViewProducts.Size = new System.Drawing.Size(886, 439);
+            this.advancedDataGridViewProducts.TabIndex = 0;
+            // 
             // SelectProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -156,9 +144,9 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label labelMain;
         private System.Windows.Forms.Panel panel2;
-        private EDGV.ExtendedDataGridView advancedDataGridViewProducts;
         private System.Windows.Forms.Label labelShownProducts;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonAddSelected;
+        private System.Windows.Forms.DataGridView advancedDataGridViewProducts;
     }
 }

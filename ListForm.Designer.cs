@@ -46,6 +46,7 @@
             this.создатьГрафикToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.создатьГрафикДляВсехToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.показатьГрафикToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonDocP = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -237,11 +238,24 @@
             this.показатьГрафикToolStripMenuItem.Size = new System.Drawing.Size(335, 26);
             this.показатьГрафикToolStripMenuItem.Text = "Показать график";
             // 
+            // buttonDocP
+            // 
+            this.buttonDocP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDocP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonDocP.Location = new System.Drawing.Point(974, 96);
+            this.buttonDocP.Name = "buttonDocP";
+            this.buttonDocP.Size = new System.Drawing.Size(95, 29);
+            this.buttonDocP.TabIndex = 24;
+            this.buttonDocP.Text = "Печать";
+            this.buttonDocP.UseVisualStyleBackColor = true;
+            this.buttonDocP.Visible = false;
+            // 
             // ListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1182, 513);
+            this.Controls.Add(this.buttonDocP);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.buttonAccept);
             this.Controls.Add(this.buttonDecline);
@@ -286,5 +300,6 @@
         private System.Windows.Forms.ToolStripMenuItem создатьГрафикToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem создатьГрафикДляВсехToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem показатьГрафикToolStripMenuItem;
+        private System.Windows.Forms.Button buttonDocP;
     }
 }

@@ -186,7 +186,7 @@ namespace TradeAggregator
             this.buttonGraph.Name = "buttonGraph";
             this.buttonGraph.Size = new System.Drawing.Size(240, 30);
             this.buttonGraph.TabIndex = 18;
-            this.buttonGraph.Text = "Финансовые-графики";
+            this.buttonGraph.Text = "Финансовые графики";
             this.buttonGraph.UseVisualStyleBackColor = true;
             this.buttonGraph.Click += new System.EventHandler(this.buttonGraph_Click);
             // 

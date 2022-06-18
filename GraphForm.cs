@@ -114,7 +114,8 @@ namespace TradeAggregator
                     $"Left join Users on Users.RecID = CommercialOffers.NetworkId " +
                     $"Left join Profiles on Profiles.RecID = Users.ProfileId " +
                     $"left join Assortment on Assortment.ProductID = CommercialOfferLines.ProductId" +
-                    $" Where CommercialOfferVendors.VendorId = {_userId} Group by Contracts.RecId, Contracts.Date, Profiles.Name, Contracts.Status Order by Contracts.Date ", _connection);
+                    $" Where CommercialOfferVendors.VendorId = 13 " +
+                    $" Group by Contracts.RecId, Contracts.Date, Profiles.Name, Contracts.Status Order by Contracts.Date ", _connection);
                 SqlDataAdapter adapt2 = new SqlDataAdapter(command2);
                 adapt2.Fill(graphs2);
                 dataGridViewGraphDocs.DataSource = graphs2;
@@ -124,7 +125,7 @@ namespace TradeAggregator
                 //График договоров
                 //Скрытие ненужностей
                 GraphRetro.Parent = null;
-                buttonApprove.Visible = false;
+                //buttonApprove.Visible = false;
                 buttonCalcAll.Visible = false;
                 buttonCalcBonus.Visible = false;
                 buttonCancelCalc.Visible = false;
@@ -159,7 +160,7 @@ namespace TradeAggregator
         {
             if (tabControl1.SelectedIndex == 0)
             {
-                buttonApprove.Visible = true;
+                //buttonApprove.Visible = true;
                 buttonCalcAll.Visible = true;
                 buttonCalcBonus.Visible = true;
                 buttonCancelCalc.Visible = true;
@@ -171,7 +172,7 @@ namespace TradeAggregator
             else
             {
 
-                buttonApprove.Visible = false;
+               // buttonApprove.Visible = false;
                 buttonCalcAll.Visible = false;
                 buttonCalcBonus.Visible = false;
                 buttonCancelCalc.Visible = false;

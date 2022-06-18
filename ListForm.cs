@@ -77,7 +77,12 @@ namespace TradeAggregator
                             buttonDelete.Visible = true;
                             menuStrip1.Visible = true;
 
-                            command = new SqlCommand($"SELECT RecId As 'Код КУ', DateFrom As 'Дата начала', DateTo As 'Дата конца', Period As 'Период', Status As 'Статус'" +
+                            command = new SqlCommand($"SELECT RecId As 'Код КУ', DateFrom As 'Дата начала', DateTo As 'Дата конца', " +
+                                $"case when Period = 0 then 'Неделея' " +
+                                $"when Period = 1 then 'Месяц' " +
+                                $"when Period = 2 then 'Квартал' " +
+                                $"when Period = 3 then 'Год' " +
+                                $" end As 'Период', Status As 'Статус'" +
                                 $" FROM KU WHERE VendorId =  {_userId} ", _connection);
 
                             dt = new DataTable();
@@ -132,6 +137,7 @@ namespace TradeAggregator
 
                             //Договоры
                             case 4:
+                            buttonDocP.Visible = true;
                             this.Text = "Заключенные договоры";
                             labelHeader.Text = "Заключенные договоры";
 
@@ -140,7 +146,8 @@ namespace TradeAggregator
                                 $" case when Contracts.Status = 0 then 'Создан' " +
                                 $"when Contracts.Status = 1 then 'Действует' " +
                                 $"when Contracts.Status = 2 then 'Закрыт' end AS 'Статус'" +
-                                $" FROM  CommercialOffers, CommercialOfferVendors, Contracts WHERE Contracts.CommercialOfferId = CommercialOffers.RecId AND VendorId = '{_userId}'", _connection);
+                                $" FROM  CommercialOffers, CommercialOfferVendors, Contracts, Profiles, Users" +
+                                $" WHERE Contracts.CommercialOfferId = CommercialOffers.RecId AND VendorId = Profiles.RecID And Profiles.RecID = Users.ProfileId AND Users.RecID = '{_userId}'", _connection);
 
                             dt = new DataTable();
                             adapt = new SqlDataAdapter(command);
